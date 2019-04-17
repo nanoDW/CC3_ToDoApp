@@ -6,15 +6,15 @@ const TaskSchema = new mongoose.Schema({
     name: { 
         type: String,
         minlength: 1,
-        maxlength: 50, 
+        maxlength: 250, 
         required: true
     },
     list: { 
         type: String, 
         minlength: 1,
-        maxlength: 30,
+        maxlength: 100,
         required: true},
-    date: { 
+    createdAt: { 
         type: Date, 
         default: Date.now},
     deadline: Date
@@ -24,9 +24,9 @@ const Task = mongoose.model("Task", TaskSchema);
 
 function validateTask(task) {
     const schema = {
-        name: Joi.string().min(1).max(50).required(),
-        list: Joi.string().min(1).max(30).required(),
-        date: Joi.date().min('now'),
+        name: Joi.string().min(1).max(250).required(),
+        list: Joi.string().min(1).max(100).required(),
+        createdAt: Joi.date().min('now'),
         deadline: Joi.date().min('now')
     };
 
