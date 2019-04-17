@@ -1,0 +1,25 @@
+{
+  "name": "cc3_todoapp",
+  "version": "1.0.0",
+  "description": "task management app",
+  "main": "index.js",
+  "dependencies": {
+    "joi": "^14.3.1",
+    "mongoose": "^5.5.2",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nanoDW/CC3_ToDoApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nanoDW/CC3_ToDoApp/issues"
+  },
+  "homepage": "https://github.com/nanoDW/CC3_ToDoApp#readme"
+}
