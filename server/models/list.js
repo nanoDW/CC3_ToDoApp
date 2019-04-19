@@ -31,7 +31,7 @@ function validateList(list) {
     return Joi.validate(list, schema);
 }
 
-//testowanie
+/*testowanie
 let list = {
     name: 'list',
     createdAt: '2019-07-05',
@@ -40,7 +40,7 @@ let list = {
 }
 let result = validateList(list);
 console.log(result);
-//testowanie
+//testowanie*/
 
 exports.List = List;
 exports.validate = validateList;
