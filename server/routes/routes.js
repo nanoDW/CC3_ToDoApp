@@ -7,17 +7,17 @@ module.exports = function (app) {
     const List = __list.List;
     const validateList = __list.validate;
 
-    const task = require('../models/task');
-    const Task = task.Task;
-    const validateTask = task.validate;
+    const __task = require('../models/task');
+    const Task = __task.Task;
+    const validateTask = __task.validate;
 
 
     app.post("/lists", async (req, res) => {
-        
+
         const list = new List({
             name: 'list',
-            createdAt: '2019-01-02',
-            color: 'red'
+            createdAt: '2019-02-05',
+            color: 'Coral',
         });
         await list.save();
         res.send(list);

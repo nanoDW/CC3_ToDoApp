@@ -33,7 +33,7 @@ function validateTask(task) {
     return Joi.validate(task, schema);
 }
 
-//testowanie
+/*testowanie
 let task = {
     name: 'do something',
     date: '2019-07-05',
@@ -42,7 +42,7 @@ let task = {
 }
 let result = validateTask(task);
 console.log(result);
-//testowanie
+//testowanie*/
 
 exports.Task = Task;
 exports.validate = validateTask;
