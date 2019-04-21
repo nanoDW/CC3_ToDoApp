@@ -31,16 +31,5 @@ function validateList(list) {
     return Joi.validate(list, schema);
 }
 
-//testowanie
-let list = {
-    name: 'list',
-    createdAt: '2019-07-05',
-    color: 'purple',
-    tasks: [2322, 324324]
-}
-let result = validateList(list);
-console.log(result);
-//testowanie
-
 exports.List = List;
 exports.validate = validateList;
