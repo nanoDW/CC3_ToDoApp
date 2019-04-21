@@ -32,7 +32,6 @@ function validateTask(task) {
 
     return Joi.validate(task, schema);
 }
-
 /*testowanie
 let task = {
     name: 'do something',

@@ -24,7 +24,7 @@ module.exports = function (app) {
         });
 
         if (validateList(list).error){
-            res.status(400).send(validateList(list).error);
+            res.status(400).send(validateList(list).error.details[0].message);
             return;
         }
 
@@ -33,7 +33,7 @@ module.exports = function (app) {
     });
 
     app.get("/api/lists", async (req, res) => {
-        const lists = await List.find(c => true);
+        const lists = await List.find();
 
             res.send(lists);
     });
@@ -56,7 +56,7 @@ module.exports = function (app) {
         });
 
         if (validateTask(task).error) {
-            res.status(400).send(validateTask(task).error);
+            res.status(400).send(validateTask(task).error.details[0].message);
             return;
         }
 
@@ -65,7 +65,7 @@ module.exports = function (app) {
     });
 
     app.get("/api/tasks", async (req, res) => {
-        const tasks = await Task.find(c => true);
+        const tasks = await Task.find();
 
             res.send(tasks);
     });
