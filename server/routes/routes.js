@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 
 module.exports = function (app) {
@@ -11,13 +12,16 @@ module.exports = function (app) {
     const Task = __task.Task;
     const validateTask = __task.validate;
 
+    const jsonParser = bodyParser.json();
 
-    app.post("/lists", async (req, res) => {
+    app.post("/lists", jsonParser, async (req, res) => {
+
+        const currentDate = Date.now();
 
         const list = new List({
-            name: 'list',
-            createdAt: '2019-02-05',
-            color: 'Coral',
+            name: req.body.name,
+            createdAt: currentDate,
+            color: req.body.color,
         });
         await list.save();
         res.send(list);
@@ -33,14 +37,15 @@ module.exports = function (app) {
         }
     });
 
-    app.post("/tasks", async (req, res) => {
+    app.post("/tasks", jsonParser, async (req, res) => {
         
         const task = new Task({
-            name: 'do something more',
-            date: '2019-07-05',
-            list: 'ds',
-            deadline: '2019-06-22'
+            name: req.body.name,
+            date: req.body.date,
+            list: req.body.list,
+            deadline: req.body.deadline
         });
+
         await task.save();
         res.send(task);
     });
