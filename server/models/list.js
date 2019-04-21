@@ -31,5 +31,6 @@ function validateList(list) {
     return Joi.validate(list, schema);
 }
 
+
 exports.List = List;
 exports.validate = validateList;
