@@ -1,7 +1,8 @@
+const Joi = require('joi');
 const express = require('express');
+const db = require('./db')();
 const app = express();
 const routes = require('./routes/routes')(app);
-const db = require('./db')();
 const {List, validate} = require('./models/list.js');
 
 
@@ -9,6 +10,13 @@ const {List, validate} = require('./models/list.js');
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => console.log(`Listening on port ${port}...`))
 
+//
+app.use(express.json());
+
+//ERROR
+app.get("*", function (req, res) {
+    res.status(404).send("Error 404. Page not found");
+});
 
 //testowanie
 async function createList() {
