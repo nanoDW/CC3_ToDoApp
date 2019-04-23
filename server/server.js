@@ -4,7 +4,8 @@ const db = require('./db')();
 const app = express();
 const routes = require('./routes/routes')(app);
 const cors = require('cors');
-const {List, validate} = require('./models/list.js');
+const {User} = require('./models/user.js');
+const bcrypt = require('bcrypt');
 
 
 //server PORT
@@ -33,17 +34,15 @@ app.get("*", function (req, res) {
     res.status(404).send("Error 404. Page not found");
 });
 
-//testowanie
-async function createList() {
-    let list = new List({
-        name: 'list',
-        createdAt: '2019-07-05',
-        color: 'purple',
-        tasks: []
+// creating user - REMOVE LATER
+async function createUser() {
+    const salt = await bcrypt.genSalt(10);
+    const hashed = await bcrypt.hash('345cthh2', salt);
+    let user = new User({
+        name: 'test',
+        email: 'testuser@gmail.com',
+        password: hashed
     })
-    let result = await list.save();
+    let result = await user.save();
     console.log(result);
 }
-
-createList();
-//testowanie
