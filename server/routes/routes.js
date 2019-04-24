@@ -17,16 +17,16 @@ module.exports = function (app) {
     app.use(express.json());
     app.use(express.urlencoded());
 
-    app.post("/api/lists", async (req, res) => {
+    app.post("/user/lists", async (req, res) => {
 
-        const listValidation = validateList(req.body);
-
-        if (listValidation.error) {
-            res.status(400).send(listValidation.error.details[0].message);
-            return;
-        }
-
+        const { error } = validateList(req.body);
+            if (error) {
+                res.status(400).send(error.details[0].message);
+                return;
+            }
+            
         const list = new List({
+            userId: req.body.userId || '5cbf50357bba6128390d51e9',
             name: req.body.name,
             color: req.body.color
         });
@@ -35,24 +35,48 @@ module.exports = function (app) {
         res.send(list);
     });
 
-    app.get("/api/lists", async (req, res) => {
-        const lists = await List.find();
+    app.get("/user/lists", async (req, res) => {
+        const lists = await List.find({
+            userId: '5cbf50357bba6128390d51e9'
+        });
 
-            res.send(lists);
+        if(!lists) {
+            return res.status(404).send('You have not created any lists yet.');
+        }
+
+        res.send(lists);
     });
 
-    app.put("/api/lists:id", async (req, res) => {
+    app.put("/user/lists/:id", async (req, res) => {
+
+        const { error } = validateList(req.body);
+            if (error) {
+                res.status(400).send(error.details[0].message);
+                return;
+            }
+
+        const result = await List.updateOne({
+            _id: req.params.id
+        },
+        {
+            $set: {
+                name: req.body.name,
+                color: req.body.color
+            }
+        }
+        );
+        res.send(result);
+        
 
     });
 
     app.post("/api/tasks", async (req, res) => {
 
-        const taskValidation = validateTask(req.body);
-
-        if (taskValidation.error) {
-            res.status(400).send(taskValidation.error.details[0].message);
-            return;
-        }
+        const { error } = validateTask(req.body);
+            if (error) {
+                res.status(400).send(error.details[0].message);
+                return;
+            }
 
         const task = new Task({
             name: req.body.name,

@@ -4,6 +4,10 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 const ListSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         minlength: 1,
