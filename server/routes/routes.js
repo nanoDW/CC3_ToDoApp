@@ -55,19 +55,20 @@ module.exports = function (app) {
                 return;
             }
 
-        const result = await List.updateOne({
-            _id: req.params.id
-        },
-        {
+        const result = await List.findByIdAndUpdate(req.params.id, {
             $set: {
                 name: req.body.name,
                 color: req.body.color
             }
-        }
-        );
-        res.send(result);
-        
+        }, { new: true });
 
+        res.send(result);
+    });
+
+    app.delete("/user/lists/:id", async (req, res) => {
+        const result = await List.findByIdAndRemove(req.params.id );
+        if(!result) res.status(400).send('List doesnt exist')
+        else res.send('List deleted successfully');
     });
 
     app.post("/api/tasks", async (req, res) => {
