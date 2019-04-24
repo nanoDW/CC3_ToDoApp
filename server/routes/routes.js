@@ -73,6 +73,10 @@ module.exports = function (app) {
             res.send(tasks);
     });
 
+    // [KAMILA] TO NIE JEST SKOŃCZONE, ALE POWIE WAM CZY DANY USER JEST W BAZIE DANYCH
+    // Będziemy korzystać z tego usera:
+    // email: testuser@gmail.com
+    // password: 345cthh2
     app.post("/api/login", jsonParser, async(req, res) => {
         console.log(req.body);
         const { error } = validateUser(req.body);
