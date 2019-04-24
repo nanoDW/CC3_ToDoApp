@@ -19,17 +19,17 @@ module.exports = function (app) {
 
     app.post("/api/lists", async (req, res) => {
 
-        const list = new List({
-            name: req.body.name,
-            color: req.body.color
-        });
-
-        const listValidation = validateList(list.toObject());
+        const listValidation = validateList(req.body);
 
         if (listValidation.error) {
             res.status(400).send(listValidation.error.details[0].message);
             return;
         }
+
+        const list = new List({
+            name: req.body.name,
+            color: req.body.color
+        });
 
         await list.save();
         res.send(list);
@@ -46,19 +46,19 @@ module.exports = function (app) {
     });
 
     app.post("/api/tasks", async (req, res) => {
-        
-        const task = new Task({
-            name: req.body.name,
-            list: req.body.list,
-            deadline: req.body.deadline
-        });
 
-        const taskValidation = validateTask(task.toObject());
+        const taskValidation = validateTask(req.body);
 
         if (taskValidation.error) {
             res.status(400).send(taskValidation.error.details[0].message);
             return;
         }
+
+        const task = new Task({
+            name: req.body.name,
+            list: req.body.list,
+            deadline: req.body.deadline
+        });
 
         await task.save();
         res.send(task);
@@ -74,7 +74,7 @@ module.exports = function (app) {
     // Będziemy korzystać z tego usera:
     // email: testuser@gmail.com
     // password: 345cthh2
-    app.post("/api/login", jsonParser, async(req, res) => {
+    app.post("/api/login", async(req, res) => {
         console.log(req.body);
         const { error } = validateUser(req.body);
         if (error) return res.status(400).send(error.details[0].message);
