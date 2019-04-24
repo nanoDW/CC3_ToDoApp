@@ -3,6 +3,10 @@ const Joi = require('joi');
 
 
 const TaskSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+        required: true
+    },
     name: { 
         type: String,
         minlength: 1,

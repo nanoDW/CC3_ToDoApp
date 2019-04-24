@@ -40,6 +40,10 @@ module.exports = function (app) {
             userId: '5cbf50357bba6128390d51e9'
         });
 
+        for(let i = 0; i<lists.length; i++){
+            lists[i].tasks = await getTasks(lists[i].name, '5cbf50357bba6128390d51e9')
+        }
+
         if(!lists) {
             return res.status(404).send('You have not created any lists yet.');
         }
@@ -71,7 +75,7 @@ module.exports = function (app) {
         else res.send('List deleted successfully');
     });
 
-    app.post("/api/tasks", async (req, res) => {
+    app.post("/user/tasks", async (req, res) => {
 
         const { error } = validateTask(req.body);
             if (error) {
@@ -80,6 +84,7 @@ module.exports = function (app) {
             }
 
         const task = new Task({
+            userId: req.body.userId || '5cbf50357bba6128390d51e9',
             name: req.body.name,
             list: req.body.list,
             deadline: req.body.deadline
@@ -89,11 +94,41 @@ module.exports = function (app) {
         res.send(task);
     });
 
-    app.get("/api/tasks", async (req, res) => {
+    app.get("/user/tasks", async (req, res) => {
         const tasks = await Task.find();
 
             res.send(tasks);
     });
+
+    app.put("/user/tasks/:id", async (req, res) => {
+
+        const { error } = validateTask(req.body);
+            if (error) {
+                res.status(400).send(error.details[0].message);
+                return;
+            }
+
+        const result = await Task.findByIdAndUpdate(req.params.id, {
+            $set: {
+                name: req.body.name,
+                list: req.body.list,
+                deadline: req.body.deadline
+            }
+        }, { new: true });
+
+        res.send(result);
+    });
+
+    app.delete("/user/tasks/:id", async (req, res) => {
+        const result = await Task.findByIdAndRemove(req.params.id);
+        if (!result) res.status(400).send('Task doesnt exist')
+        else res.send('Task deleted successfully');
+    });
+
+    async function getTasks(list, userId){
+        const tasks = Task.find( {list: list, userId: userId} );
+        return tasks;
+    }
 
     // [KAMILA] TO NIE JEST SKOŃCZONE, ALE POWIE WAM CZY DANY USER JEST W BAZIE DANYCH
     // Będziemy korzystać z tego usera:
