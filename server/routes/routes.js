@@ -11,20 +11,20 @@ module.exports = function (app) {
     const Task = __task.Task;
     const validateTask = __task.validate;
 
-    const jsonParser = bodyParser.json();
+    app.use(express.json());
+    app.use(express.urlencoded());
 
-    app.post("/api/lists", jsonParser, async (req, res) => {
-
-        const currentDate = Date.now();
+    app.post("/api/lists", async (req, res) => {
 
         const list = new List({
             name: req.body.name,
-            createdAt: currentDate,
             color: req.body.color
         });
 
-        if (validateList(list).error){
-            res.status(400).send(validateList(list).error.details[0].message);
+        const listValidation = validateList(list.toObject());
+
+        if (listValidation.error) {
+            res.status(400).send(listValidation.error.details[0].message);
             return;
         }
 
@@ -37,26 +37,23 @@ module.exports = function (app) {
 
             res.send(lists);
     });
-    app.get("/api/lists:_id", async (req, res) => {
-        const lists = await List.find(c => {
-            console.log(c)
-            console.log(req.params)
-            return c._id === req.params._id;
-        });
-            res.send(lists);
+
+    app.put("/api/lists:id", async (req, res) => {
+
     });
 
-    app.post("/api/tasks", jsonParser, async (req, res) => {
+    app.post("/api/tasks", async (req, res) => {
         
         const task = new Task({
             name: req.body.name,
-            date: req.body.date,
             list: req.body.list,
             deadline: req.body.deadline
         });
 
-        if (validateTask(task).error) {
-            res.status(400).send(validateTask(task).error.details[0].message);
+        const taskValidation = validateTask(task.toObject());
+
+        if (taskValidation.error) {
+            res.status(400).send(taskValidation.error.details[0].message);
             return;
         }
 

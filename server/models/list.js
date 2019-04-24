@@ -23,7 +23,6 @@ const List = mongoose.model("List", ListSchema);
 function validateList(list) {
     const schema = {
         name: Joi.string().min(1).max(100).required(),
-        createdAt: Joi.date().min('now'),
         color: Joi.string(),
         tasks: Joi.array().unique()
     };
