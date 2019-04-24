@@ -3,6 +3,9 @@ const bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 const __list = require('../models/list');
 const __task = require('../models/task');
+const {User, validateUser} = require('../models/user');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports = function (app) {
     const List = __list.List;
@@ -65,6 +68,26 @@ module.exports = function (app) {
         const tasks = await Task.find();
 
             res.send(tasks);
+    });
+
+    // [KAMILA] TO NIE JEST SKOŃCZONE, ALE POWIE WAM CZY DANY USER JEST W BAZIE DANYCH
+    // Będziemy korzystać z tego usera:
+    // email: testuser@gmail.com
+    // password: 345cthh2
+    app.post("/api/login", jsonParser, async(req, res) => {
+        console.log(req.body);
+        const { error } = validateUser(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        let user = await User.findOne({ email: req.body.email });
+        if (!user) return res.status(400).send('Invalid email or password');
+
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
+        if (!validPassword) return res.status(400).send('Invalid email or password');
+
+        //const token = jwt.sign({ _id: user._id }, )
+    
+        res.send(true);
     });
    
 }

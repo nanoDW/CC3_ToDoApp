@@ -24,7 +24,6 @@ function validateList(list) {
     const schema = {
         name: Joi.string().min(1).max(100).required(),
         color: Joi.string(),
-        tasks: Joi.array().unique()
     };
 
     return Joi.validate(list, schema);
