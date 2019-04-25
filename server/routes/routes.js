@@ -94,7 +94,9 @@ module.exports = function (app) {
     });
 
     app.get("/user/tasks", auth,  async (req, res) => {
-        const tasks = await Task.find();
+        const tasks = await Task.find({
+            userId: req.user
+        });
 
             res.send(tasks);
     });
