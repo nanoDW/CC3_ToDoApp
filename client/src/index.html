@@ -4,29 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:200,400,500,700|Roboto:400,700"
+      rel="stylesheet"
+    />
+
     <title>To-Do App</title>
   </head>
   <body>
-    <div class="app-container">
+    <div class="app">
       <!-- login screen -->
       <div class="login-screen">
-        <div class="logo"></div>
-        <h2>Welcome back!</h2>
-        <h3>Sign in to continue</h3>
-        <form action="" class="login-form">
-          <p class="input-description">E-mail:</p>
-          <input
-            class="login-form__input"
-            type="email"
-            placeholder="e.g. jan.kowalski@example.com"
-          />
-          <p class="input-description">Password:</p>
-          <input class="login-form__input" type="password" />
-          <button type="submit" class="btn btn--login">Sign in!</button>
-        </form>
+        <div class="login-container">
+          <div class="login-logo"></div>
+          <h2>Welcome back!</h2>
+          <h3>Sign in to continue</h3>
+          <form action="" class="login-form">
+            <label class="input-description">E-mail:</label>
+            <input
+              class="login-form__input"
+              type="email"
+              placeholder="e.g. jan.kowalski@example.com"
+            />
+            <label class="input-description">Password:</label>
+            <input class="login-form__input" type="password" />
+            <button type="submit" class="btn btn--login">Sign in!</button>
+          </form>
+        </div>
       </div>
       <!-- main screen -->
-      <div class="main-screen">
+      <div class="main-screen main-screen--hidden">
         <h2 class="main-heading">Your tasks:</h2>
         <button class="btn btn--new-list">Create a new list</button>
         <!-- list template -->
@@ -35,18 +42,38 @@
             <h2 class="list__description">Groceries</h2>
             <button class="btn btn--new-item"></button>
           </div>
-          <div class="list__items">
-            <div class="item">
+          <ul class="list__items">
+            <li class="item">
               <input
                 type="checkbox"
                 name=""
                 id=""
                 class="checkbox checkbox--item"
               />
-              <p class="item__description"></p>
+              <p class="item__description">Apples</p>
               <button class="btn btn--edit"></button>
-            </div>
-          </div>
+            </li>
+            <li class="item">
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                class="checkbox checkbox--item"
+              />
+              <p class="item__description">Meat</p>
+              <button class="btn btn--edit"></button>
+            </li>
+            <li class="item">
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                class="checkbox checkbox--item"
+              />
+              <p class="item__description">Bananas</p>
+              <button class="btn btn--edit"></button>
+            </li>
+          </ul>
         </div>
         <!-- new list screen -->
         <div class="new-list">
@@ -54,14 +81,44 @@
             <h2 class="new-list__description">Create a new list</h2>
           </div>
           <form action="" class="new-list__form">
-            <p class="input-description">Name:</p>
+            <label class="input-description">Name:</label>
             <input type="text" name="" id="" placeholder="Put name here" />
-            <p class="input-description">Color:</p>
-            <input type="radio" name="" id="" class="color-input color1" />
-            <input type="radio" name="" id="" class="color-input color2" />
-            <input type="radio" name="" id="" class="color-input color3" />
-            <input type="radio" name="" id="" class="color-input color4" />
-            <input type="radio" name="" id="" class="color-input color5" />
+            <label class="input-description">Color:</label>
+            <input
+              type="radio"
+              name="color"
+              value="color1"
+              id=""
+              class="color-input color1"
+            />
+            <input
+              type="radio"
+              name="color"
+              value="color2"
+              id=""
+              class="color-input color2"
+            />
+            <input
+              type="radio"
+              name="color"
+              value="color3"
+              id=""
+              class="color-input color3"
+            />
+            <input
+              type="radio"
+              name="color"
+              value="color4"
+              id=""
+              class="color-input color4"
+            />
+            <input
+              type="radio"
+              name="color"
+              value="color5"
+              id=""
+              class="color-input color5"
+            />
             <button type="submit" class="btn btn--create-list"></button>
           </form>
         </div>
