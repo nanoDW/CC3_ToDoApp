@@ -1,11 +1,13 @@
-const Joi = require('joi');
 const express = require('express');
 const db = require('./db')();
 const app = express();
 const routes = require('./routes/routes')(app);
 const cors = require('cors');
+// ponisze będzie do usunięcia
 const {User} = require('./models/user.js');
 const bcrypt = require('bcrypt');
+const config = require('config');
+const Joi = require('joi');
 
 
 //server PORT
@@ -33,6 +35,12 @@ app.use(express.urlencoded({
 app.get("*", function (req, res) {
     res.status(404).send("Error 404. Page not found");
 });
+
+//PRIVATE KEY
+if (!config.get('jwtPrivateKey')) {
+    console.error('jwtPrivateKey is not defined.');
+    process.exit(1); 
+}
 
 // creating user - REMOVE LATER
 async function createUser() {

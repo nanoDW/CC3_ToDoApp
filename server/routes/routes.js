@@ -1,11 +1,9 @@
 const express = require("express");
-const bodyParser = require('body-parser')
-const mongoose = require("mongoose");
 const __list = require('../models/list');
 const __task = require('../models/task');
-const {User, validateUser} = require('../models/user');
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const auth = require('../middleware/auth');
+const login = require('./login.js')
+
 
 module.exports = function (app) {
     const List = __list.List;
@@ -16,9 +14,10 @@ module.exports = function (app) {
 
     app.use(express.json());
     app.use(express.urlencoded());
+    app.use('/login', login);
 
-    app.post("/user/lists", async (req, res) => {
-
+    app.post("/user/lists", auth, async (req, res) => {
+        
         const { error } = validateList(req.body);
             if (error) {
                 res.status(400).send(error.details[0].message);
@@ -26,7 +25,7 @@ module.exports = function (app) {
             }
             
         const list = new List({
-            userId: req.body.userId || '5cbf50357bba6128390d51e9',
+            userId: req.user,
             name: req.body.name,
             color: req.body.color
         });
@@ -35,13 +34,13 @@ module.exports = function (app) {
         res.send(list);
     });
 
-    app.get("/user/lists", async (req, res) => {
+    app.get("/user/lists", auth, async (req, res) => {
         const lists = await List.find({
-            userId: '5cbf50357bba6128390d51e9'
+            userId: req.user
         });
 
         for(let i = 0; i<lists.length; i++){
-            lists[i].tasks = await getTasks(lists[i].name, '5cbf50357bba6128390d51e9')
+            lists[i].tasks = await getTasks(lists[i].name, req.user)
         }
 
         if(!lists) {
@@ -51,7 +50,7 @@ module.exports = function (app) {
         res.send(lists);
     });
 
-    app.put("/user/lists/:id", async (req, res) => {
+    app.put("/user/lists/:id", auth, async (req, res) => {
 
         const { error } = validateList(req.body);
             if (error) {
@@ -69,13 +68,13 @@ module.exports = function (app) {
         res.send(result);
     });
 
-    app.delete("/user/lists/:id", async (req, res) => {
+    app.delete("/user/lists/:id", auth,  async (req, res) => {
         const result = await List.findByIdAndRemove(req.params.id );
         if(!result) res.status(400).send('List doesnt exist')
         else res.send('List deleted successfully');
     });
 
-    app.post("/user/tasks", async (req, res) => {
+    app.post("/user/tasks", auth, async (req, res) => {
 
         const { error } = validateTask(req.body);
             if (error) {
@@ -84,7 +83,7 @@ module.exports = function (app) {
             }
 
         const task = new Task({
-            userId: req.body.userId || '5cbf50357bba6128390d51e9',
+            userId: req.user,
             name: req.body.name,
             list: req.body.list,
             deadline: req.body.deadline
@@ -94,13 +93,13 @@ module.exports = function (app) {
         res.send(task);
     });
 
-    app.get("/user/tasks", async (req, res) => {
+    app.get("/user/tasks", auth,  async (req, res) => {
         const tasks = await Task.find();
 
             res.send(tasks);
     });
 
-    app.put("/user/tasks/:id", async (req, res) => {
+    app.put("/user/tasks/:id", auth, async (req, res) => {
 
         const { error } = validateTask(req.body);
             if (error) {
@@ -119,7 +118,7 @@ module.exports = function (app) {
         res.send(result);
     });
 
-    app.delete("/user/tasks/:id", async (req, res) => {
+    app.delete("/user/tasks/:id", auth,  async (req, res) => {
         const result = await Task.findByIdAndRemove(req.params.id);
         if (!result) res.status(400).send('Task doesnt exist')
         else res.send('Task deleted successfully');
@@ -129,25 +128,5 @@ module.exports = function (app) {
         const tasks = Task.find( {list: list, userId: userId} );
         return tasks;
     }
-
-    // [KAMILA] TO NIE JEST SKOŃCZONE, ALE POWIE WAM CZY DANY USER JEST W BAZIE DANYCH
-    // Będziemy korzystać z tego usera:
-    // email: testuser@gmail.com
-    // password: 345cthh2
-    app.post("/api/login", async(req, res) => {
-        console.log(req.body);
-        const { error } = validateUser(req.body);
-        if (error) return res.status(400).send(error.details[0].message);
-
-        let user = await User.findOne({ email: req.body.email });
-        if (!user) return res.status(400).send('Invalid email or password');
-
-        const validPassword = await bcrypt.compare(req.body.password, user.password);
-        if (!validPassword) return res.status(400).send('Invalid email or password');
-
-        //const token = jwt.sign({ _id: user._id }, )
-    
-        res.send(true);
-    });
    
 }
