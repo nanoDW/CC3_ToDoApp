@@ -1,8 +1,8 @@
 const express = require("express");
 const __list = require('../models/list');
 const __task = require('../models/task');
-const auth = require('../middleware/auth');
-const login = require('./login.js')
+const {loginRouter, auth} = require('./login.js')
+const cookieParser = require('cookie-parser');
 
 
 module.exports = function (app) {
@@ -14,7 +14,8 @@ module.exports = function (app) {
 
     app.use(express.json());
     app.use(express.urlencoded());
-    app.use('/login', login);
+    app.use('/login', loginRouter);
+    app.use(cookieParser());
 
     app.post("/user/lists", auth, async (req, res) => {
         
