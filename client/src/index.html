@@ -44,7 +44,7 @@
               <i class="zwicon-plus-circle"></i>
             </button>
           </div>
-          <ul class="list__items">
+          <ul class="list__items list__items--hidden">
             <li class="item">
               <input
                 type="checkbox"
@@ -55,6 +55,9 @@
               <p class="item__description">Apples</p>
               <button class="btn btn--edit">
                 <i class="zwicon-edit-square"></i>
+              </button>
+              <button class="btn btn--delete">
+                <i class="zwicon-trash"></i>
               </button>
             </li>
             <li class="item">
@@ -68,6 +71,9 @@
               <button class="btn btn--edit">
                 <i class="zwicon-edit-square"></i>
               </button>
+              <button class="btn btn--delete">
+                <i class="zwicon-trash"></i>
+              </button>
             </li>
             <li class="item">
               <input
@@ -80,9 +86,13 @@
               <button class="btn btn--edit">
                 <i class="zwicon-edit-square"></i>
               </button>
+              <button class="btn btn--delete">
+                <i class="zwicon-trash"></i>
+              </button>
             </li>
           </ul>
         </div>
+
         <div class="list">
           <div class="list__header">
             <h2 class="list__description">Groceries</h2>
@@ -99,8 +109,12 @@
                 class="checkbox checkbox--item"
               />
               <p class="item__description">Apples</p>
+              <input type="text" class="item__edit item__edit--hidden" />
               <button class="btn btn--edit">
                 <i class="zwicon-edit-square"></i>
+              </button>
+              <button class="btn btn--delete">
+                <i class="zwicon-trash"></i>
               </button>
             </li>
             <li class="item">
@@ -114,6 +128,9 @@
               <button class="btn btn--edit">
                 <i class="zwicon-edit-square"></i>
               </button>
+              <button class="btn btn--delete">
+                <i class="zwicon-trash"></i>
+              </button>
             </li>
             <li class="item">
               <input
@@ -126,55 +143,69 @@
               <button class="btn btn--edit">
                 <i class="zwicon-edit-square"></i>
               </button>
+              <button class="btn btn--delete">
+                <i class="zwicon-trash"></i>
+              </button>
             </li>
           </ul>
         </div>
         <!-- new list screen -->
         <div class="new-list">
-          <div class="new-list__header">
-            <h2 class="new-list__description">Create a new list</h2>
+          <div class="new-list-container">
+            <div class="new-list__header">
+              <h2 class="new-list__description">Create a new list</h2>
+            </div>
+            <form action="" class="new-list__form">
+              <label class="input-description">Name:</label>
+              <input
+                class="new-list-input"
+                type="text"
+                name=""
+                placeholder="Put name here"
+              />
+              <label class="input-description">Color:</label>
+              <div class="color-radios">
+                <input
+                  type="radio"
+                  name="color"
+                  value="color1"
+                  id=""
+                  class="color-input color1"
+                />
+                <input
+                  type="radio"
+                  name="color"
+                  value="color2"
+                  id=""
+                  class="color-input color2"
+                />
+                <input
+                  type="radio"
+                  name="color"
+                  value="color3"
+                  id=""
+                  class="color-input color3"
+                />
+                <input
+                  type="radio"
+                  name="color"
+                  value="color4"
+                  id=""
+                  class="color-input color4"
+                />
+                <input
+                  type="radio"
+                  name="color"
+                  value="color5"
+                  id=""
+                  class="color-input color5"
+                />
+              </div>
+              <button type="submit" class="btn btn--create-list">
+                Create!
+              </button>
+            </form>
           </div>
-          <form action="" class="new-list__form">
-            <label class="input-description">Name:</label>
-            <input type="text" name="" id="" placeholder="Put name here" />
-            <label class="input-description">Color:</label>
-            <input
-              type="radio"
-              name="color"
-              value="color1"
-              id=""
-              class="color-input color1"
-            />
-            <input
-              type="radio"
-              name="color"
-              value="color2"
-              id=""
-              class="color-input color2"
-            />
-            <input
-              type="radio"
-              name="color"
-              value="color3"
-              id=""
-              class="color-input color3"
-            />
-            <input
-              type="radio"
-              name="color"
-              value="color4"
-              id=""
-              class="color-input color4"
-            />
-            <input
-              type="radio"
-              name="color"
-              value="color5"
-              id=""
-              class="color-input color5"
-            />
-            <button type="submit" class="btn btn--create-list"></button>
-          </form>
         </div>
       </div>
     </div>
