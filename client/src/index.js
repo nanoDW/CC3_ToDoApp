@@ -10,6 +10,9 @@ document.querySelector(".btn--login").addEventListener("click", () => {
   login(email, password);
 });
 
+
+const userLists = []; //Tutaj zapisane zostaną listy użytkownika po sfetchowaniu.
+
 async function login(email, password) {
   const loginResponse = await postLogin(`http://localhost:3000/login`, {
     email: email,
@@ -24,7 +27,9 @@ async function login(email, password) {
       .querySelector(".main-screen")
       .classList.remove("main-screen--hidden");
 
-      getLists().then(lists => console.log(lists));
+      getLists()
+        .then(lists => userLists.push(...lists))
+        .then(console.log('Fetching user lists done.'))
   }
 }
 
