@@ -24,7 +24,7 @@ async function login(email, password) {
       .querySelector(".main-screen")
       .classList.remove("main-screen--hidden");
 
-      getLists();
+      getLists().then(lists => console.log(lists));
   }
 }
 
@@ -43,7 +43,7 @@ function postLogin(url, data) {
 }
 
 async function getLists(){
-  await fetch('http://localhost:3000/user/lists', {
+  return fetch('http://localhost:3000/user/lists', {
     method: "GET",
     mode: "cors",
     credentials: "include",
@@ -52,6 +52,5 @@ async function getLists(){
     }
   })
   .then(data => data.json())
-  .then(lists => console.log(lists))
 }
 
