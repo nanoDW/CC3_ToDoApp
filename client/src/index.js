@@ -23,6 +23,8 @@ async function login(email, password) {
     document
       .querySelector(".main-screen")
       .classList.remove("main-screen--hidden");
+
+      getLists();
   }
 }
 
@@ -39,3 +41,17 @@ function postLogin(url, data) {
     body: JSON.stringify(data)
   });
 }
+
+async function getLists(){
+  await fetch('http://localhost:3000/user/lists', {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(data => data.json())
+  .then(lists => console.log(lists))
+}
+

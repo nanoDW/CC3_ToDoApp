@@ -1,8 +1,9 @@
 const express = require("express");
 const __list = require('../models/list');
 const __task = require('../models/task');
-const {loginRouter, auth} = require('./login.js')
+const {loginRouter, auth} = require('./login.js');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 
 module.exports = function (app) {
@@ -11,6 +12,11 @@ module.exports = function (app) {
     
     const Task = __task.Task;
     const validateTask = __task.validate;
+
+    app.use(cors({
+        credentials: true,
+        origin: "http://127.0.0.1:5500"
+    }));
 
     app.use(express.json());
     app.use(express.urlencoded());
