@@ -10,6 +10,9 @@ document.querySelector(".btn--login").addEventListener("click", () => {
   login(email, password);
 });
 
+
+const userLists = []; //Tutaj zapisane zostaną listy użytkownika po sfetchowaniu.
+
 async function login(email, password) {
   const loginResponse = await postLogin(`http://localhost:3000/login`, {
     email: email,
@@ -24,7 +27,13 @@ async function login(email, password) {
       .querySelector(".main-screen")
       .classList.remove("main-screen--hidden");
 
+<<<<<<< HEAD
     getLists();
+=======
+      getLists()
+        .then(lists => userLists.push(...lists))
+        .then(console.log('Fetching user lists done.'))
+>>>>>>> bb1790d292cd31d1dd2317fbc6b4d14d4df73649
   }
 }
 
@@ -42,8 +51,13 @@ function postLogin(url, data) {
   });
 }
 
+<<<<<<< HEAD
 async function getLists() {
   await fetch("http://localhost:3000/user/lists", {
+=======
+async function getLists(){
+  return fetch('http://localhost:3000/user/lists', {
+>>>>>>> bb1790d292cd31d1dd2317fbc6b4d14d4df73649
     method: "GET",
     mode: "cors",
     credentials: "include",
@@ -51,8 +65,12 @@ async function getLists() {
       "Content-Type": "application/json"
     }
   })
+<<<<<<< HEAD
     .then(data => data.json())
     .then(lists => console.log(lists));
+=======
+  .then(data => data.json())
+>>>>>>> bb1790d292cd31d1dd2317fbc6b4d14d4df73649
 }
 
 /*

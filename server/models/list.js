@@ -19,7 +19,7 @@ const ListSchema = new mongoose.Schema({
         default: Date.now
     },
     color: String,
-    tasks: [ObjectId]
+    tasks: []
 });
 
 const List = mongoose.model("List", ListSchema);
