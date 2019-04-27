@@ -24,7 +24,6 @@ app.use(cors());
 //     next();
 // }); 
 
-// app.set('etag', false);
 
 //Body request
 app.use(express.json());

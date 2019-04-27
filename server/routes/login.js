@@ -34,7 +34,6 @@ router.post("/", async (req, res) => {
 
     const token = user.generateAuthToken();
     
-    // res.clearCookie('token')
     res.cookie('token', token).send('Cookie is set');
 });
 
