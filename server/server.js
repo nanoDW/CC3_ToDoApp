@@ -17,12 +17,14 @@ const server = app.listen(port, () => {
     console.log(`Listening on port ${port}...`)
 })
 
-//CORS config
+// CORS config
 app.use(cors());
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    next();
-}); 
+// app.use(function (req, res, next) {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     next();
+// }); 
+
+// app.set('etag', false);
 
 //Body request
 app.use(express.json());

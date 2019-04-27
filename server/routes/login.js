@@ -1,10 +1,17 @@
 const {User, validateUser} = require('../models/user');
 const bcrypt = require("bcrypt");
 const express = require('express');
+const cors = require('cors');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+
+
+router.use(cors({
+    credentials: true,
+    origin: "http://127.0.0.1:5500"
+}));
 
 router.use(cookieParser());
 
@@ -26,10 +33,9 @@ router.post("/", async (req, res) => {
     if (!validPassword) return res.status(400).send('Invalid email or password');
 
     const token = user.generateAuthToken();
-
+    
+    // res.clearCookie('token')
     res.cookie('token', token).send('Cookie is set');
-    
-    
 });
 
 function auth(req, res, next) {
