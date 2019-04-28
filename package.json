@@ -10,6 +10,7 @@
     "start:dev": "webpack-dev-server"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^3.0.6",
     "config": "^3.1.0",

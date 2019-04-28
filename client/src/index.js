@@ -26,12 +26,19 @@ async function login(email, password) {
     document
       .querySelector(".main-screen")
       .classList.remove("main-screen--hidden");
+      
+      const getListsResponse = await getLists()
+        .then(res => {
+          console.log(res)
+          return res.json()
+        })
+        .then(lists => userLists.push(...lists))
 
-      getLists()
-        .then(console.log('Fetching user lists done.'))
-        .then(console.log(userLists))
+        console.log('Lists of user: ', userLists)
   }
 }
+
+
 
 function postLogin(url, data) {
   console.log(url, data);
@@ -47,7 +54,7 @@ function postLogin(url, data) {
   });
 }
 
-async function getLists(){
+function getLists(){
   return fetch('http://localhost:3000/user/lists', {
     method: "GET",
     mode: "cors",
@@ -56,10 +63,38 @@ async function getLists(){
       "Content-Type": "application/json"
     }
   })
+}
 
-    .then(data => data.json())
-    .then(lists => userLists.push(...lists))
+async function postList(name, color) {
+  return fetch(`http://localhost:3000/user/lists`, {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+            name: name,
+            color: color
+          })
+    });
+    //przykład: postList('newlist','newColor').then(response => {console.log(response)});
+}
 
+function putList(listId, name, color) {
+  return fetch(`http://localhost:3000/user/lists/${listId}`, {
+    method: "PUT",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: name,
+      color: color
+    })
+  });
+  //przykład: const putListResponse = await putList('5cc595c9b273b022d1d6bc8b', 'newer list', 'never color')
 }
 
 /*
