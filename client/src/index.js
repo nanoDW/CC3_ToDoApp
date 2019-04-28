@@ -45,7 +45,7 @@ function displayLists(userLists) {
   const listsWrapper = document.querySelector(".lists-wrapper");
   userLists.forEach(list => {
     const displayedList = `
-    <div class="list" data-listid="${list.id}">
+    <div class="list" data-listid="${list._id}">
       <div class="list__header">
         <h2 class="list__description">${list.name}</h2>
 
