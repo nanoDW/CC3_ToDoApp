@@ -85,6 +85,7 @@ function displayLists(userLists) {
     `;
     listsWrapper.innerHTML += displayedList;
   });
+  deleteListEventListener();
 }
 
 function hideLogin() {
@@ -214,6 +215,21 @@ function deleteTask(taskId) {
     }
   });
   //przykład: const deleteTaskResponse = await deleteTask('5cc5bd3013e35113c455be5e');
+}
+
+function deleteListEventListener(){
+  document.querySelectorAll('.btn--delete-list')
+    .forEach(input => input.addEventListener('click', e => {
+      e.preventDefault();
+      const listId = e.target.parentNode.parentNode.parentNode.getAttribute("data-listid");
+      if (confirm("Are you sure you want to delete this list?")) {
+        const index = userLists.findIndex(obj => obj._id === listId);
+        userLists.splice(index, 1);
+        deleteList(listId);
+        document.querySelector(".lists-wrapper").innerHTML = '';
+        displayLists(userLists);
+      }
+    }));
 }
 
 // logging out
