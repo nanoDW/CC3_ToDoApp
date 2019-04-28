@@ -12,7 +12,9 @@ const ListSchema = new mongoose.Schema({
         type: String,
         minlength: 1,
         maxlength: 100,
-        required: true
+        required: true,
+        unique: true,
+        dropDups: true
     },
     createdAt: {
         type: Date,
