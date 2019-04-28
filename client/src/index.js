@@ -10,7 +10,6 @@ document.querySelector(".btn--login").addEventListener("click", () => {
   login(email, password);
 });
 
-
 const userLists = []; //Tutaj zapisane zostaną listy użytkownika po sfetchowaniu.
 
 async function login(email, password) {
@@ -111,8 +110,11 @@ Wyświetlenie nowej listy - template html:
         <div class="list">
           <div class="list__header" style="background-color: ****tutaj kolor**** ">   <----stwierdziłem, że chyba najwygodniej będzie kolor wrzucać jako inline style
             <h2 class="list__description">  ***nazwa listy***   </h2>
+            <button class="btn btn--delete-list">
+                <i class="zwicon-trash"></i>
+            </button>
             <button class="btn btn--new-item">
-              <i class="zwicon-plus-circle"></i>
+                <i class="zwicon-plus-circle"></i>
             </button>
           </div>
           <ul class="list__items list__items--hidden">
