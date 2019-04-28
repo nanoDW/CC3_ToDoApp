@@ -19,7 +19,7 @@ document.querySelector(".btn--login").addEventListener("click", () => {
 
 document.querySelector(".btn--new-list").addEventListener("click", () => {
   event.preventDefault();
-  document.querySelector(".new-list").classList.add(".new-list--active");
+  document.querySelector(".new-list").classList.add("new-list--active");
   console.log('new list added')
 });
 
@@ -86,6 +86,7 @@ function displayLists(userLists) {
     listsWrapper.innerHTML += displayedList;
   });
   deleteListEventListener();
+  editTaskEventListener()
 }
 
 function hideLogin() {
@@ -226,6 +227,26 @@ function deleteListEventListener(){
         const index = userLists.findIndex(obj => obj._id === listId);
         userLists.splice(index, 1);
         deleteList(listId);
+        document.querySelector(".lists-wrapper").innerHTML = '';
+        displayLists(userLists);
+      }
+    }));
+}
+//unfinished #Ola
+function editTaskEventListener() {
+  document.querySelectorAll('.btn--edit')
+    .forEach(input => input.addEventListener('click', e => {
+      e.preventDefault();
+
+      document.querySelector(".item__description").classList.add("item__description--hidden");
+      document.querySelector(".item__edit").classList.remove("item__edit--hidden");
+
+      const taskId = e.target.parentNode.parentNode.getAttribute("data-taskid");
+
+      if (confirm("Are you sure?")) {
+        const index = userLists.tasks.findIndex(obj => obj._id === taskId);
+        
+        putTask(taskId);
         document.querySelector(".lists-wrapper").innerHTML = '';
         displayLists(userLists);
       }
