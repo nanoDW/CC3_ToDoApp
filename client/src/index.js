@@ -24,32 +24,53 @@ async function login(email, password) {
   });
   console.log(loginResponse);
   if (loginResponse.ok) {
-      
-      hideLogin();
-      fetchLists();
+    hideLogin();
+    fetchLists();
   }
 }
 
 async function fetchLists() {
   const getListsResponse = await getLists()
     .then(res => {
-      console.log(res)
-      return res.json()
+      console.log(res);
+      return res.json();
     })
-    .then(lists => userLists.push(...lists))
+    .then(lists => userLists.push(...lists));
 
-  console.log('Lists of current user: ', userLists)
+  console.log("Lists of current user: ", userLists);
+  displayLists(userLists);
+}
+
+function displayLists(userLists) {
+  const listsWrapper = document.querySelector(".lists-wrapper");
+  userLists.forEach(list => {
+    const displayedList = `
+    <div class="list" data-listid="${list.id}">
+      <div class="list__header">
+        <h2 class="list__description">${list.name}</h2>
+
+        <button class="btn btn--delete-list">
+          <i class="zwicon-trash"></i>
+        </button>
+        <button class="btn btn--new-item">
+          <i class="zwicon-plus-circle"></i>
+        </button>
+      </div>
+    <ul class="list__items list__items--hidden">
+  
+    </ul>
+    </div>
+    `;
+    listsWrapper.innerHTML += displayedList;
+  });
 }
 
 function hideLogin() {
-  document
-    .querySelector(".login-screen")
-    .classList.add("login-screen--hidden");
+  document.querySelector(".login-screen").classList.add("login-screen--hidden");
   document
     .querySelector(".main-screen")
     .classList.remove("main-screen--hidden");
 }
-
 
 function postLogin(url, data) {
   console.log(url, data);
@@ -65,31 +86,31 @@ function postLogin(url, data) {
   });
 }
 
-function getLists(){
-  return fetch('http://localhost:3000/user/lists', {
+function getLists() {
+  return fetch("http://localhost:3000/user/lists", {
     method: "GET",
     mode: "cors",
     credentials: "include",
     headers: {
       "Content-Type": "application/json"
     }
-  })
+  });
 }
 
 function postList(name, color) {
   return fetch(`http://localhost:3000/user/lists`, {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-            name: name,
-            color: color
-          })
-    });
-    //przykład: const postListResponse = postList('newlist','newColor');
+    method: "POST",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: name,
+      color: color
+    })
+  });
+  //przykład: const postListResponse = postList('newlist','newColor');
 }
 
 function putList(listId, name, color) {
@@ -117,54 +138,54 @@ function deleteList(listId) {
       "Content-Type": "application/json"
     }
   });
-    //przykład: const deleteListResponse = await deleteList('5cc575a8d39f43b7d1ec3091');
-  }
+  //przykład: const deleteListResponse = await deleteList('5cc575a8d39f43b7d1ec3091');
+}
 
-  function postTask(name, list, deadline) {
-    return fetch(`http://localhost:3000/user/tasks`, {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: name,
-        list: list,
-        deadline: deadline
-      })
-    });
-    //przykład: const postTaskResponse = await postTask('newTask', 'someList', '2019-04-30');
-  }
+function postTask(name, list, deadline) {
+  return fetch(`http://localhost:3000/user/tasks`, {
+    method: "POST",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: name,
+      list: list,
+      deadline: deadline
+    })
+  });
+  //przykład: const postTaskResponse = await postTask('newTask', 'someList', '2019-04-30');
+}
 
-  function putTask(taskId, name, list, deadline) {
-    return fetch(`http://localhost:3000/user/tasks/${taskId}`, {
-      method: "PUT",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: name,
-        list: list,
-        deadline: deadline
-      })
-    });
-    //przykład: const putTaskResponse = await putTask('5cc5bd3013e35113c455be5e', 'newer Task 500', 'someList', '2019-05-06');
-  }
+function putTask(taskId, name, list, deadline) {
+  return fetch(`http://localhost:3000/user/tasks/${taskId}`, {
+    method: "PUT",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: name,
+      list: list,
+      deadline: deadline
+    })
+  });
+  //przykład: const putTaskResponse = await putTask('5cc5bd3013e35113c455be5e', 'newer Task 500', 'someList', '2019-05-06');
+}
 
-  function deleteTask(taskId) {
-    return fetch(`http://localhost:3000/user/tasks/${taskId}`, {
-      method: "DELETE",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    //przykład: const deleteTaskResponse = await deleteTask('5cc5bd3013e35113c455be5e');
-  }
+function deleteTask(taskId) {
+  return fetch(`http://localhost:3000/user/tasks/${taskId}`, {
+    method: "DELETE",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+  //przykład: const deleteTaskResponse = await deleteTask('5cc5bd3013e35113c455be5e');
+}
 
 /*
 Jak sterować wyglądem:
