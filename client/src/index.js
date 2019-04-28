@@ -50,9 +50,25 @@ async function fetchLists() {
 function displayLists(userLists) {
   const listsWrapper = document.querySelector(".lists-wrapper");
   userLists.forEach(list => {
+    const tasks = [...list.tasks];
+    let tasksHTML = "";
+    tasks.forEach(task => {
+      tasksHTML += `
+        <li class="item" data-taskid="${task._id}">
+          <input type="checkbox" name="" class="checkbox checkbox--item" />
+          <p class="item__description">${task.name}</p>
+          <button class="btn btn--edit">
+            <i class="zwicon-edit-square"></i>
+          </button>
+          <button class="btn btn--delete">
+            <i class="zwicon-trash"></i>
+          </button>
+        </li>
+        `;
+    });
     const displayedList = `
     <div class="list" data-listid="${list._id}">
-      <div class="list__header">
+      <div class="list__header" style="background-color:${list.color}">
         <h2 class="list__description">${list.name}</h2>
 
         <button class="btn btn--delete-list">
@@ -63,7 +79,7 @@ function displayLists(userLists) {
         </button>
       </div>
     <ul class="list__items list__items--hidden">
-  
+      ${tasksHTML}
     </ul>
     </div>
     `;
