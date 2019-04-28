@@ -30,6 +30,7 @@ async function login(email, password) {
       getLists()
         .then(lists => userLists.push(...lists))
         .then(console.log('Fetching user lists done.'))
+        .then(console.log(userLists))
   }
 }
 

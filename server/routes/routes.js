@@ -79,6 +79,8 @@ module.exports = function (app) {
         const result = await List.findByIdAndRemove(req.params.id );
         if(!result) res.status(400).send('List doesnt exist')
         else res.send('List deleted successfully');
+
+        if (result.name) deleteTaskByListname(result.name);
     });
 
     app.post("/user/tasks", auth, async (req, res) => {
@@ -136,6 +138,11 @@ module.exports = function (app) {
     async function getTasks(list, userId){
         const tasks = Task.find( {list: list, userId: userId} );
         return tasks;
+    }
+
+    async function deleteTaskByListname(listName) {
+        const tasks = await Task.deleteMany({list: listName})
+        console.log(`Removed tasks that belong to list: ${listName}`);
     }
    
 }
