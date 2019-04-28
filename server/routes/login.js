@@ -10,8 +10,10 @@ const config = require('config');
 
 router.use(cors({
     credentials: true,
-    origin: "http://127.0.0.1:5500"
+    origin: ["http://localhost:8080", "http://127.0.0.1:5500"]
 }));
+
+//http://127.0.0.1:5500
 
 router.use(cookieParser());
 
