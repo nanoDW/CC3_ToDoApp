@@ -20,7 +20,7 @@ document.querySelector(".btn--login").addEventListener("click", () => {
 document.querySelector(".btn--new-list").addEventListener("click", () => {
   event.preventDefault();
   document.querySelector(".new-list").classList.add("new-list--active");
-  console.log('new list added')
+  console.log("new list added");
 });
 
 async function login(email, password) {
@@ -88,8 +88,10 @@ function displayLists(userLists) {
     listsWrapper.innerHTML += displayedList;
   });
   deleteListEventListener();
-  editTaskEventListener()
+  editTaskEventListener();
 }
+
+// Wstępny zarys dodawania taska
 
 function allowTaskAdding() {
   const newItemButtons = document.querySelectorAll(".btn--new-item");
@@ -277,39 +279,47 @@ function deleteTask(taskId) {
   //przykład: const deleteTaskResponse = await deleteTask('5cc5bd3013e35113c455be5e');
 }
 
-function deleteListEventListener(){
-  document.querySelectorAll('.btn--delete-list')
-    .forEach(input => input.addEventListener('click', e => {
+function deleteListEventListener() {
+  document.querySelectorAll(".btn--delete-list").forEach(input =>
+    input.addEventListener("click", e => {
       e.preventDefault();
-      const listId = e.target.parentNode.parentNode.parentNode.getAttribute("data-listid");
+      const listId = e.target.parentNode.parentNode.parentNode.getAttribute(
+        "data-listid"
+      );
       if (confirm("Are you sure you want to delete this list?")) {
         const index = userLists.findIndex(obj => obj._id === listId);
         userLists.splice(index, 1);
         deleteList(listId);
-        document.querySelector(".lists-wrapper").innerHTML = '';
+        document.querySelector(".lists-wrapper").innerHTML = "";
         displayLists(userLists);
       }
-    }));
+    })
+  );
 }
 //unfinished #Ola
 function editTaskEventListener() {
-  document.querySelectorAll('.btn--edit')
-    .forEach(input => input.addEventListener('click', e => {
+  document.querySelectorAll(".btn--edit").forEach(input =>
+    input.addEventListener("click", e => {
       e.preventDefault();
 
-      document.querySelector(".item__description").classList.add("item__description--hidden");
-      document.querySelector(".item__edit").classList.remove("item__edit--hidden");
+      document
+        .querySelector(".item__description")
+        .classList.add("item__description--hidden");
+      document
+        .querySelector(".item__edit")
+        .classList.remove("item__edit--hidden");
 
       const taskId = e.target.parentNode.parentNode.getAttribute("data-taskid");
 
       if (confirm("Are you sure?")) {
         const index = userLists.tasks.findIndex(obj => obj._id === taskId);
-        
+
         putTask(taskId);
-        document.querySelector(".lists-wrapper").innerHTML = '';
+        document.querySelector(".lists-wrapper").innerHTML = "";
         displayLists(userLists);
       }
-    }));
+    })
+  );
 }
 
 // logging out
