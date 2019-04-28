@@ -69,7 +69,7 @@ function displayLists(userLists) {
         `;
     });
     const displayedList = `
-    <div class="list" data-listid="${list._id}">
+    <div class="list" data-listid="${list._id}" data-listname="${list.name}">
       <div class="list__header" style="background-color:${list.color}">
         <h2 class="list__description">${list.name}</h2>
 
@@ -125,7 +125,6 @@ async function addTask(targetList) {
             </li>
   `;
   targetList.querySelector(".list__items").innerHTML += initialHtml;
-  console.log(targetList);
   const currentItem = targetList.querySelector('[data-taskid="new-item"]');
   const taskInput = currentItem.querySelector(".item__edit");
   const editButton = currentItem.querySelector(".btn--edit");
@@ -138,15 +137,18 @@ async function addTask(targetList) {
     taskInputValue = taskInput.value;
   });
 
-  editButton.addEventListener("click", () => {
-    console.log(taskInputValue);
+  editButton.addEventListener("click", async () => {
     taskInput.classList.add("item__edit--hidden");
     itemDescription.classList.remove("item__description--hidden");
     itemDescription.innerText = taskInputValue;
-    console.log(editButton.children);
     editButton.children[0].className = "zwicon-edit-square";
     deleteButton.children[0].className = "zwicon-trash";
-    // const postTaskResponse = await postTask(taskInputValue, targetList....???.., 'null')
+    const postTaskResponse = await postTask(
+      taskInputValue,
+      targetList.dataset.listname,
+      "2019-05-30"
+    );
+    console.log(postTaskResponse);
   });
 }
 
