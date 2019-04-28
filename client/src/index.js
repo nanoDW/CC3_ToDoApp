@@ -28,7 +28,6 @@ async function login(email, password) {
       .classList.remove("main-screen--hidden");
 
       getLists()
-        .then(lists => userLists.push(...lists))
         .then(console.log('Fetching user lists done.'))
         .then(console.log(userLists))
   }
@@ -59,7 +58,7 @@ async function getLists(){
   })
 
     .then(data => data.json())
-    .then(lists => console.log(lists));
+    .then(lists => userLists.push(...lists))
 
 }
 
