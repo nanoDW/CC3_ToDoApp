@@ -307,6 +307,8 @@ function newListEventListener() {
     if (postListResponse.ok){
       document.querySelector(".lists-wrapper").innerHTML = '';
       await fetchLists();
+    }else {
+      alert('List name empty or it already exists.')
     }
   });
 }
