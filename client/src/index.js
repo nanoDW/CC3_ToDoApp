@@ -24,12 +24,6 @@ async function login(email, password) {
   });
   console.log(loginResponse);
   if (loginResponse.ok) {
-    document
-      .querySelector(".login-screen")
-      .classList.add("login-screen--hidden");
-    document
-      .querySelector(".main-screen")
-      .classList.remove("main-screen--hidden");
       
       hideLogin();
       fetchLists();
