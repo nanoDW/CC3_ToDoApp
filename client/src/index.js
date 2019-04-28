@@ -20,7 +20,8 @@ document.querySelector(".btn--login").addEventListener("click", () => {
 document.querySelector(".btn--new-list").addEventListener("click", () => {
   event.preventDefault();
   document.querySelector(".new-list").classList.add("new-list--active");
-  console.log('new list added')
+
+  newListEventListener()
 });
 
 async function login(email, password) {
@@ -41,7 +42,10 @@ async function fetchLists() {
       console.log(res);
       return res.json();
     })
-    .then(lists => userLists.push(...lists));
+    .then(lists => {
+      userLists.length = 0
+      userLists.push(...lists)
+    });
 
   console.log("Lists of current user: ", userLists);
   displayLists(userLists);
@@ -216,6 +220,32 @@ function deleteTask(taskId) {
     }
   });
   //przykład: const deleteTaskResponse = await deleteTask('5cc5bd3013e35113c455be5e');
+}
+
+function newListEventListener() {
+  document.querySelector('.new-list__form').addEventListener("submit", async () => {
+    event.preventDefault();
+
+    document.querySelector(".new-list").classList.remove("new-list--active");
+    document.querySelector(".new-list").classList.add("new-list");
+
+    const listName = document.querySelector(".new-list-input").value
+    let listColor;
+
+    const radios = document.getElementsByName('color');
+    for (var i = 0, length = radios.length; i < length; i++) {
+      if (radios[i].checked) {
+        listColor = radios[i].value;
+        break;
+      }
+    }
+    const postListResponse = await postList(listName, listColor);
+
+    if (postListResponse.ok){
+      document.querySelector(".lists-wrapper").innerHTML = '';
+      await fetchLists();
+    }
+  });
 }
 
 function deleteListEventListener(){
