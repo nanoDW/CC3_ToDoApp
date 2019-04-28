@@ -37,117 +37,126 @@
         <h2 class="main-heading">Your tasks:</h2>
         <button class="btn btn--new-list">Create a new list</button>
         <!-- list template -->
-        <div class="list">
-          <div class="list__header">
-            <h2 class="list__description">Groceries</h2>
-            <button class="btn btn--new-item">
-              <i class="zwicon-plus-circle"></i>
-            </button>
-          </div>
-          <ul class="list__items list__items--hidden">
-            <li class="item">
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                class="checkbox checkbox--item"
-              />
-              <p class="item__description">Apples</p>
-              <button class="btn btn--edit">
-                <i class="zwicon-edit-square"></i>
-              </button>
-              <button class="btn btn--delete">
-                <i class="zwicon-trash"></i>
-              </button>
-            </li>
-            <li class="item">
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                class="checkbox checkbox--item"
-              />
-              <p class="item__description">Meat</p>
-              <button class="btn btn--edit">
-                <i class="zwicon-edit-square"></i>
-              </button>
-              <button class="btn btn--delete">
-                <i class="zwicon-trash"></i>
-              </button>
-            </li>
-            <li class="item">
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                class="checkbox checkbox--item"
-              />
-              <p class="item__description">Bananas</p>
-              <button class="btn btn--edit">
-                <i class="zwicon-edit-square"></i>
-              </button>
-              <button class="btn btn--delete">
-                <i class="zwicon-trash"></i>
-              </button>
-            </li>
-          </ul>
-        </div>
+        <div class="lists-wrapper">
+          <div class="list">
+            <div class="list__header">
+              <h2 class="list__description">Groceries</h2>
 
-        <div class="list">
-          <div class="list__header">
-            <h2 class="list__description">Groceries</h2>
-            <button class="btn btn--new-item">
-              <i class="zwicon-plus-circle"></i>
-            </button>
+              <button class="btn btn--delete-list">
+                <i class="zwicon-trash"></i>
+              </button>
+              <button class="btn btn--new-item">
+                <i class="zwicon-plus-circle"></i>
+              </button>
+            </div>
+            <ul class="list__items list__items--hidden">
+              <li class="item">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  class="checkbox checkbox--item"
+                />
+                <p class="item__description">Apples</p>
+                <button class="btn btn--edit">
+                  <i class="zwicon-edit-square"></i>
+                </button>
+                <button class="btn btn--delete">
+                  <i class="zwicon-trash"></i>
+                </button>
+              </li>
+              <li class="item">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  class="checkbox checkbox--item"
+                />
+                <p class="item__description">Meat</p>
+                <button class="btn btn--edit">
+                  <i class="zwicon-edit-square"></i>
+                </button>
+                <button class="btn btn--delete">
+                  <i class="zwicon-trash"></i>
+                </button>
+              </li>
+              <li class="item">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  class="checkbox checkbox--item"
+                />
+                <p class="item__description">Bananas</p>
+                <button class="btn btn--edit">
+                  <i class="zwicon-edit-square"></i>
+                </button>
+                <button class="btn btn--delete">
+                  <i class="zwicon-trash"></i>
+                </button>
+              </li>
+            </ul>
           </div>
-          <ul class="list__items">
-            <li class="item">
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                class="checkbox checkbox--item"
-              />
-              <p class="item__description">Apples</p>
-              <input type="text" class="item__edit item__edit--hidden" />
-              <button class="btn btn--edit">
-                <i class="zwicon-edit-square"></i>
-              </button>
-              <button class="btn btn--delete">
+
+          <div class="list">
+            <div class="list__header">
+              <h2 class="list__description">Groceries</h2>
+              <button class="btn btn--delete-list">
                 <i class="zwicon-trash"></i>
               </button>
-            </li>
-            <li class="item">
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                class="checkbox checkbox--item"
-              />
-              <p class="item__description">Meat</p>
-              <button class="btn btn--edit">
-                <i class="zwicon-edit-square"></i>
+              <button class="btn btn--new-item">
+                <i class="zwicon-plus-circle"></i>
               </button>
-              <button class="btn btn--delete">
-                <i class="zwicon-trash"></i>
-              </button>
-            </li>
-            <li class="item">
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                class="checkbox checkbox--item"
-              />
-              <p class="item__description">Bananas</p>
-              <button class="btn btn--edit">
-                <i class="zwicon-edit-square"></i>
-              </button>
-              <button class="btn btn--delete">
-                <i class="zwicon-trash"></i>
-              </button>
-            </li>
-          </ul>
+            </div>
+            <ul class="list__items">
+              <li class="item">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  class="checkbox checkbox--item"
+                />
+                <p class="item__description">Apples</p>
+                <input type="text" class="item__edit item__edit--hidden" />
+                <button class="btn btn--edit">
+                  <i class="zwicon-edit-square"></i>
+                </button>
+                <button class="btn btn--delete">
+                  <i class="zwicon-trash"></i>
+                </button>
+              </li>
+              <li class="item">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  class="checkbox checkbox--item"
+                />
+                <p class="item__description">Meat</p>
+                <button class="btn btn--edit">
+                  <i class="zwicon-edit-square"></i>
+                </button>
+                <button class="btn btn--delete">
+                  <i class="zwicon-trash"></i>
+                </button>
+              </li>
+              <li class="item">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  class="checkbox checkbox--item"
+                />
+                <p class="item__description">Bananas</p>
+                <button class="btn btn--edit">
+                  <i class="zwicon-edit-square"></i>
+                </button>
+                <button class="btn btn--delete">
+                  <i class="zwicon-trash"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
         <!-- new list screen -->
         <div class="new-list">
