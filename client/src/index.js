@@ -49,7 +49,9 @@ async function fetchLists() {
 
   console.log("Lists of current user: ", userLists);
   displayLists(userLists);
+  allowTaskAdding();
 }
+// Wyświetlanie list z taskami
 
 function displayLists(userLists) {
   const listsWrapper = document.querySelector(".lists-wrapper");
@@ -71,7 +73,7 @@ function displayLists(userLists) {
         `;
     });
     const displayedList = `
-    <div class="list" data-listid="${list._id}">
+    <div class="list" data-listid="${list._id}" data-listname="${list.name}">
       <div class="list__header" style="background-color:${list.color}">
         <h2 class="list__description">${list.name}</h2>
 
@@ -90,7 +92,68 @@ function displayLists(userLists) {
     listsWrapper.innerHTML += displayedList;
   });
   deleteListEventListener();
-  editTaskEventListener()
+  editTaskEventListener();
+}
+
+// Wstępny zarys dodawania taska
+
+function allowTaskAdding() {
+  const newItemButtons = document.querySelectorAll(".btn--new-item");
+  console.log(newItemButtons);
+  newItemButtons.forEach(button => {
+    button.addEventListener("click", event => {
+      const targetList = event.currentTarget.parentNode.parentNode;
+      console.log(targetList);
+      addTask(targetList);
+    });
+  });
+}
+
+async function addTask(targetList) {
+  const initialHtml = `
+          <li class="item" data-taskid="new-item">
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                class="checkbox checkbox--item"
+              />
+              <p class="item__description item__description--hidden"></p>
+              <input type="text" class="item__edit" placeholder="Task description"/>
+              <button class="btn btn--edit">
+                <i class="zwicon-checkmark-circle"></i>
+              </button>
+              <button class="btn btn--delete">
+                <i class=""></i>
+              </button>
+            </li>
+  `;
+  targetList.querySelector(".list__items").innerHTML += initialHtml;
+  const currentItem = targetList.querySelector('[data-taskid="new-item"]');
+  const taskInput = currentItem.querySelector(".item__edit");
+  const editButton = currentItem.querySelector(".btn--edit");
+  const deleteButton = currentItem.querySelector(".btn--delete");
+  const itemDescription = currentItem.querySelector(".item__description");
+
+  let taskInputValue = "";
+
+  taskInput.addEventListener("input", () => {
+    taskInputValue = taskInput.value;
+  });
+
+  editButton.addEventListener("click", async () => {
+    taskInput.classList.add("item__edit--hidden");
+    itemDescription.classList.remove("item__description--hidden");
+    itemDescription.innerText = taskInputValue;
+    editButton.children[0].className = "zwicon-edit-square";
+    deleteButton.children[0].className = "zwicon-trash";
+    const postTaskResponse = await postTask(
+      taskInputValue,
+      targetList.dataset.listname,
+      "2019-05-30"
+    );
+    console.log(postTaskResponse);
+  });
 }
 
 function hideLogin() {
@@ -252,35 +315,43 @@ function deleteListEventListener(){
   document.querySelectorAll('.btn--delete-list')
     .forEach(input => input.addEventListener('click', e => {
       e.preventDefault();
-      const listId = e.target.parentNode.parentNode.parentNode.getAttribute("data-listid");
+      const listId = e.target.parentNode.parentNode.parentNode.getAttribute(
+        "data-listid"
+      );
       if (confirm("Are you sure you want to delete this list?")) {
         const index = userLists.findIndex(obj => obj._id === listId);
         userLists.splice(index, 1);
         deleteList(listId);
-        document.querySelector(".lists-wrapper").innerHTML = '';
+        document.querySelector(".lists-wrapper").innerHTML = "";
         displayLists(userLists);
       }
-    }));
+    })
+  );
 }
 //unfinished #Ola
 function editTaskEventListener() {
-  document.querySelectorAll('.btn--edit')
-    .forEach(input => input.addEventListener('click', e => {
+  document.querySelectorAll(".btn--edit").forEach(input =>
+    input.addEventListener("click", e => {
       e.preventDefault();
 
-      document.querySelector(".item__description").classList.add("item__description--hidden");
-      document.querySelector(".item__edit").classList.remove("item__edit--hidden");
+      document
+        .querySelector(".item__description")
+        .classList.add("item__description--hidden");
+      document
+        .querySelector(".item__edit")
+        .classList.remove("item__edit--hidden");
 
       const taskId = e.target.parentNode.parentNode.getAttribute("data-taskid");
 
       if (confirm("Are you sure?")) {
         const index = userLists.tasks.findIndex(obj => obj._id === taskId);
-        
+
         putTask(taskId);
-        document.querySelector(".lists-wrapper").innerHTML = '';
+        document.querySelector(".lists-wrapper").innerHTML = "";
         displayLists(userLists);
       }
-    }));
+    })
+  );
 }
 
 // logging out

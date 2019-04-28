@@ -178,6 +178,7 @@ input {
   display: none;
 }
 .item__edit {
+  font-family: roboto, sans-serif;
   margin: 0 10px;
   width: 100%;
   font-size: 15px;
