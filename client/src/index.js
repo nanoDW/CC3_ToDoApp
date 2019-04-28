@@ -1,6 +1,8 @@
 import "./style/style.css";
 import "./style/zwicon.css";
 
+const userLists = []; //Tutaj zapisane zostaną listy użytkownika po sfetchowaniu.
+
 if (document.cookie) {
   hideLogin();
   fetchLists();
@@ -15,7 +17,11 @@ document.querySelector(".btn--login").addEventListener("click", () => {
   login(email, password);
 });
 
-const userLists = []; //Tutaj zapisane zostaną listy użytkownika po sfetchowaniu.
+document.querySelector(".btn--new-list").addEventListener("click", () => {
+  event.preventDefault();
+  document.querySelector(".new-list").classList.add("new-list--active");
+  console.log('new list added')
+});
 
 async function login(email, password) {
   const loginResponse = await postLogin(`http://localhost:3000/login`, {
@@ -81,6 +87,8 @@ function displayLists(userLists) {
     `;
     listsWrapper.innerHTML += displayedList;
   });
+  deleteListEventListener();
+  editTaskEventListener()
 }
 
 function allowTaskAdding() {
@@ -269,6 +277,41 @@ function deleteTask(taskId) {
   //przykład: const deleteTaskResponse = await deleteTask('5cc5bd3013e35113c455be5e');
 }
 
+function deleteListEventListener(){
+  document.querySelectorAll('.btn--delete-list')
+    .forEach(input => input.addEventListener('click', e => {
+      e.preventDefault();
+      const listId = e.target.parentNode.parentNode.parentNode.getAttribute("data-listid");
+      if (confirm("Are you sure you want to delete this list?")) {
+        const index = userLists.findIndex(obj => obj._id === listId);
+        userLists.splice(index, 1);
+        deleteList(listId);
+        document.querySelector(".lists-wrapper").innerHTML = '';
+        displayLists(userLists);
+      }
+    }));
+}
+//unfinished #Ola
+function editTaskEventListener() {
+  document.querySelectorAll('.btn--edit')
+    .forEach(input => input.addEventListener('click', e => {
+      e.preventDefault();
+
+      document.querySelector(".item__description").classList.add("item__description--hidden");
+      document.querySelector(".item__edit").classList.remove("item__edit--hidden");
+
+      const taskId = e.target.parentNode.parentNode.getAttribute("data-taskid");
+
+      if (confirm("Are you sure?")) {
+        const index = userLists.tasks.findIndex(obj => obj._id === taskId);
+        
+        putTask(taskId);
+        document.querySelector(".lists-wrapper").innerHTML = '';
+        displayLists(userLists);
+      }
+    }));
+}
+
 // logging out
 document.querySelector(".btn--logout").addEventListener("click", () => {
   document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
@@ -349,7 +392,7 @@ Edycja taska (nazwa taska znika i w jej miejscu pojawia się input z wypełnion�
 
 Włączenie ekranu nowej listy:
 
-    document.querySelector(".new-list").classList.add("new-list--active");
+    document.querySelector(".new-list").classList.add(".new-list--active");
 
     (analogicznie po zatwierdzeniu usuwamy tą klasę i czyścimy inputy)
     (mam jeszcze problem ze stylowaniem tych radio input z kolorami - jak ogarnę to tu dopiszę)
