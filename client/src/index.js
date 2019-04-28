@@ -39,7 +39,9 @@ async function fetchLists() {
 
   console.log("Lists of current user: ", userLists);
   displayLists(userLists);
+  allowTaskAdding();
 }
+// Wyświetlanie list z taskami
 
 function displayLists(userLists) {
   const listsWrapper = document.querySelector(".lists-wrapper");
@@ -78,6 +80,63 @@ function displayLists(userLists) {
     </div>
     `;
     listsWrapper.innerHTML += displayedList;
+  });
+}
+
+function allowTaskAdding() {
+  const newItemButtons = document.querySelectorAll(".btn--new-item");
+  console.log(newItemButtons);
+  newItemButtons.forEach(button => {
+    button.addEventListener("click", event => {
+      const targetList = event.currentTarget.parentNode.parentNode;
+      console.log(targetList);
+      addTask(targetList);
+    });
+  });
+}
+
+async function addTask(targetList) {
+  const initialHtml = `
+          <li class="item" data-taskid="new-item">
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                class="checkbox checkbox--item"
+              />
+              <p class="item__description item__description--hidden"></p>
+              <input type="text" class="item__edit" placeholder="Task description"/>
+              <button class="btn btn--edit">
+                <i class="zwicon-checkmark-circle"></i>
+              </button>
+              <button class="btn btn--delete">
+                <i class=""></i>
+              </button>
+            </li>
+  `;
+  targetList.querySelector(".list__items").innerHTML += initialHtml;
+  console.log(targetList);
+  const currentItem = targetList.querySelector('[data-taskid="new-item"]');
+  const taskInput = currentItem.querySelector(".item__edit");
+  const editButton = currentItem.querySelector(".btn--edit");
+  const deleteButton = currentItem.querySelector(".btn--delete");
+  const itemDescription = currentItem.querySelector(".item__description");
+
+  let taskInputValue = "";
+
+  taskInput.addEventListener("input", () => {
+    taskInputValue = taskInput.value;
+  });
+
+  editButton.addEventListener("click", () => {
+    console.log(taskInputValue);
+    taskInput.classList.add("item__edit--hidden");
+    itemDescription.classList.remove("item__description--hidden");
+    itemDescription.innerText = taskInputValue;
+    console.log(editButton.children);
+    editButton.children[0].className = "zwicon-edit-square";
+    deleteButton.children[0].className = "zwicon-trash";
+    // const postTaskResponse = await postTask(taskInputValue, targetList....???.., 'null')
   });
 }
 
