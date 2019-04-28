@@ -46,12 +46,12 @@ module.exports = function (app) {
             userId: req.user
         });
 
-        for(let i = 0; i<lists.length; i++){
-            lists[i].tasks = await getTasks(lists[i].name, req.user)
+        if (!lists) {
+            return res.status(404).send('You have not created any lists yet.');
         }
 
-        if(!lists) {
-            return res.status(404).send('You have not created any lists yet.');
+        for(let i = 0; i<lists.length; i++){
+            lists[i].tasks = await getTasks(lists[i].name, req.user)
         }
 
         res.send(lists);

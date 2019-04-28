@@ -32,7 +32,6 @@ async function login(email, password) {
           return res.json()
         })
         .then(lists => userLists.push(...lists))
-
         console.log('Lists of current user: ', userLists)
   }
 }
@@ -77,7 +76,7 @@ function postList(name, color) {
             color: color
           })
     });
-    //przykład: const postListResponse = postList('newlist','newColor').then(response => {console.log(response)});
+    //przykład: const postListResponse = postList('newlist','newColor');
 }
 
 function putList(listId, name, color) {
@@ -93,8 +92,66 @@ function putList(listId, name, color) {
       color: color
     })
   });
-  //przykład: const putListResponse = await putList('5cc595c9b273b022d1d6bc8b', 'newer list', 'never color')
+  //przykład: const putListResponse = await putList('5cc595c9b273b022d1d6bc8b', 'newer list', 'never color');
 }
+
+function deleteList(listId) {
+  return fetch(`http://localhost:3000/user/lists/${listId}`, {
+    method: "DELETE",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+    //przykład: const deleteListResponse = await deleteList('5cc575a8d39f43b7d1ec3091');
+  }
+
+  function postTask(name, list, deadline) {
+    return fetch(`http://localhost:3000/user/tasks`, {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        list: list,
+        deadline: deadline
+      })
+    });
+    //przykład: const postTaskResponse = await postTask('newTask', 'someList', '2019-04-30');
+  }
+
+  function putTask(taskId, name, list, deadline) {
+    return fetch(`http://localhost:3000/user/tasks/${taskId}`, {
+      method: "PUT",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        list: list,
+        deadline: deadline
+      })
+    });
+    //przykład: const putTaskResponse = await putTask('5cc5bd3013e35113c455be5e', 'newer Task 500', 'someList', '2019-05-06');
+  }
+
+  function deleteTask(taskId) {
+    return fetch(`http://localhost:3000/user/tasks/${taskId}`, {
+      method: "DELETE",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    //przykład: const deleteTaskResponse = await deleteTask('5cc5bd3013e35113c455be5e');
+  }
 
 /*
 Jak sterować wyglądem:
