@@ -96,6 +96,8 @@ module.exports = function (app) {
 
         const doesTaskExist = await doesItExist(Task, req.user, req.body.name);
         if (doesTaskExist) return res.status(400).send('Task of that name is already in Your collection');
+        const doesListExist = await doesItExist(List, req.user, req.body.list);
+        if (doesListExist) return res.status(400).send('You have no such list in Your collection');
 
         const task = new Task({
             userId: req.user,
