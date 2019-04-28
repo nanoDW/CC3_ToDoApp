@@ -1,6 +1,11 @@
 import "./style/style.css";
 import "./style/zwicon.css";
 
+if (document.cookie) {
+  hideLogin();
+  fetchLists();
+}
+
 document.querySelector(".btn--login").addEventListener("click", () => {
   event.preventDefault();
 
@@ -19,24 +24,30 @@ async function login(email, password) {
   });
   console.log(loginResponse);
   if (loginResponse.ok) {
-    document
-      .querySelector(".login-screen")
-      .classList.add("login-screen--hidden");
-    document
-      .querySelector(".main-screen")
-      .classList.remove("main-screen--hidden");
-      
-      const getListsResponse = await getLists()
-        .then(res => {
-          console.log(res)
-          return res.json()
-        })
-        .then(lists => userLists.push(...lists))
-
-        console.log('Lists of current user: ', userLists)
+      hideLogin();
+      fetchLists();
   }
 }
 
+async function fetchLists() {
+  const getListsResponse = await getLists()
+    .then(res => {
+      console.log(res)
+      return res.json()
+    })
+    .then(lists => userLists.push(...lists))
+
+  console.log('Lists of current user: ', userLists)
+}
+
+function hideLogin() {
+  document
+    .querySelector(".login-screen")
+    .classList.add("login-screen--hidden");
+  document
+    .querySelector(".main-screen")
+    .classList.remove("main-screen--hidden");
+}
 
 
 function postLogin(url, data) {
