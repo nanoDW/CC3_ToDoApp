@@ -278,7 +278,7 @@ Edycja taska (nazwa taska znika i w jej miejscu pojawia się input z wypełnion�
 
 Włączenie ekranu nowej listy:
 
-    document.querySelector(".new-list").classList.add("new-list--active");
+    document.querySelector(".new-list").classList.add(".new-list--active");
 
     (analogicznie po zatwierdzeniu usuwamy tą klasę i czyścimy inputy)
     (mam jeszcze problem ze stylowaniem tych radio input z kolorami - jak ogarnę to tu dopiszę)
