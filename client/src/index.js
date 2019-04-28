@@ -203,6 +203,8 @@ function deleteTask(taskId) {
 // logging out
 document.querySelector(".btn--logout").addEventListener("click", () => {
   document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+  document.querySelector(".lists-wrapper").innerHTML = "";
+  userLists.splice(0, userLists.length);
   showLogin();
 });
 
