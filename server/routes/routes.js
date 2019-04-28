@@ -30,6 +30,9 @@ module.exports = function (app) {
                 res.status(400).send(error.details[0].message);
                 return;
             }
+
+        const doesListExist = await doesItExist(List, req.user, req.body.name);
+        if (doesListExist) return res.status(400).send('List of that name is already in Your collection');
             
         const list = new List({
             userId: req.user,
@@ -91,6 +94,11 @@ module.exports = function (app) {
                 return;
             }
 
+        const doesTaskExist = await doesItExist(Task, req.user, req.body.name);
+        if (doesTaskExist) return res.status(400).send('Task of that name is already in Your collection');
+        const doesListExist = await doesItExist(List, req.user, req.body.list);
+        if (!doesListExist) return res.status(400).send('You have no such list in Your collection');
+
         const task = new Task({
             userId: req.user,
             name: req.body.name,
@@ -144,5 +152,12 @@ module.exports = function (app) {
         const tasks = await Task.deleteMany({list: listName, userId: userId});
         console.log(`Removed tasks that belong to list: ${listName}`);
     }
-   
+
+    function doesItExist(schema, userId, name) {
+        return schema.findOne({
+            userId: userId,
+            name: name
+        })
+    }
+    
 }
