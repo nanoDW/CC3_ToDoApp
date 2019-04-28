@@ -50,6 +50,15 @@ function hideLogin() {
     .classList.remove("main-screen--hidden");
 }
 
+function showLogin() {
+  document
+    .querySelector(".login-screen")
+    .classList.remove("login-screen--hidden");
+  document
+    .querySelector(".main-screen")
+    .classList.add("main-screen--hidden");
+}
+
 
 function postLogin(url, data) {
   console.log(url, data);
@@ -165,6 +174,14 @@ function deleteList(listId) {
     });
     //przykład: const deleteTaskResponse = await deleteTask('5cc5bd3013e35113c455be5e');
   }
+
+
+// logging out
+document.querySelector(".btn--logout").addEventListener("click", () => {
+  document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+  showLogin();
+});
+
 
 /*
 Jak sterować wyglądem:
