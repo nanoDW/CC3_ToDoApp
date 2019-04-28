@@ -1,6 +1,8 @@
 import "./style/style.css";
 import "./style/zwicon.css";
 
+const userLists = []; //Tutaj zapisane zostaną listy użytkownika po sfetchowaniu.
+
 if (document.cookie) {
   hideLogin();
   fetchLists();
@@ -15,7 +17,11 @@ document.querySelector(".btn--login").addEventListener("click", () => {
   login(email, password);
 });
 
-const userLists = []; //Tutaj zapisane zostaną listy użytkownika po sfetchowaniu.
+document.querySelector(".btn--new-list").addEventListener("click", () => {
+  event.preventDefault();
+  document.querySelector(".new-list").classList.add(".new-list--active");
+  console.log('new list added')
+});
 
 async function login(email, password) {
   const loginResponse = await postLogin(`http://localhost:3000/login`, {
