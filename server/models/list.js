@@ -13,8 +13,6 @@ const ListSchema = new mongoose.Schema({
         minlength: 1,
         maxlength: 100,
         required: true,
-        unique: true,
-        dropDups: true
     },
     createdAt: {
         type: Date,
