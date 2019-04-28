@@ -33,7 +33,7 @@ async function login(email, password) {
         })
         .then(lists => userLists.push(...lists))
 
-        console.log('Lists of user: ', userLists)
+        console.log('Lists of current user: ', userLists)
   }
 }
 
@@ -64,7 +64,7 @@ function getLists(){
   })
 }
 
-async function postList(name, color) {
+function postList(name, color) {
   return fetch(`http://localhost:3000/user/lists`, {
       method: "POST",
       mode: "cors",
@@ -77,7 +77,7 @@ async function postList(name, color) {
             color: color
           })
     });
-    //przykład: postList('newlist','newColor').then(response => {console.log(response)});
+    //przykład: const postListResponse = postList('newlist','newColor').then(response => {console.log(response)});
 }
 
 function putList(listId, name, color) {
