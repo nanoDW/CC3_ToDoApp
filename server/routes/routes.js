@@ -80,7 +80,7 @@ module.exports = function (app) {
         if(!result) res.status(400).send('List doesnt exist')
         else res.send('List deleted successfully');
 
-        if (result.name) deleteTaskByListname(result.name);
+        if (result.name) deleteTaskByListname(result.name,req.user);
     });
 
     app.post("/user/tasks", auth, async (req, res) => {
@@ -140,8 +140,8 @@ module.exports = function (app) {
         return tasks;
     }
 
-    async function deleteTaskByListname(listName) {
-        const tasks = await Task.deleteMany({list: listName})
+    async function deleteTaskByListname(listName, userId) {
+        const tasks = await Task.deleteMany({list: listName, userId: userId});
         console.log(`Removed tasks that belong to list: ${listName}`);
     }
    
