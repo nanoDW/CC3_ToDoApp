@@ -104,7 +104,6 @@ module.exports = function (app) {
             name: req.body.name,
             list: req.body.list,
             deadline: req.body.deadline,
-            done: req.body.done
         });
 
         await task.save();
