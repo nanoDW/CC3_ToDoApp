@@ -24,8 +24,7 @@ const TaskSchema = new mongoose.Schema({
     done: {
         type: Boolean,
         default: false
-    },
-    deadline: Date
+    }
 });
 
 const Task = mongoose.model("Task", TaskSchema);
