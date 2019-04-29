@@ -258,7 +258,7 @@ function deleteList(listId) {
   //przykład: const deleteListResponse = await deleteList('5cc575a8d39f43b7d1ec3091');
 }
 
-function postTask(name, list, deadline) {
+function postTask(name, list, deadline, done) {
   return fetch(`http://localhost:3000/user/tasks`, {
     method: "POST",
     mode: "cors",
@@ -269,13 +269,14 @@ function postTask(name, list, deadline) {
     body: JSON.stringify({
       name: name,
       list: list,
-      deadline: deadline
+      deadline: deadline,
+      done: done
     })
   });
   //przykład: const postTaskResponse = await postTask('newTask', 'someList', '2019-04-30');
 }
 
-function putTask(taskId, name, list, deadline) {
+function putTask(taskId, name, list, deadline, done) {
   return fetch(`http://localhost:3000/user/tasks/${taskId}`, {
     method: "PUT",
     mode: "cors",
@@ -286,7 +287,8 @@ function putTask(taskId, name, list, deadline) {
     body: JSON.stringify({
       name: name,
       list: list,
-      deadline: deadline
+      deadline: deadline,
+      done: done
     })
   });
   //przykład: const putTaskResponse = await putTask('5cc5bd3013e35113c455be5e', 'newer Task 500', 'someList', '2019-05-06');
