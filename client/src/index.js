@@ -1,7 +1,7 @@
 import "./style/style.css";
 import "./style/zwicon.css";
 
-const userLists = []; //Tutaj zapisane zostaną listy użytkownika po sfetchowaniu.
+const userLists = [];
 
 if (document.cookie) {
   hideLogin();
@@ -100,7 +100,6 @@ function displayLists(userLists) {
     listsWrapper.innerHTML += displayedList;
   });
   deleteListEventListener();
-  // editTaskEventListener();
   toggleListEventListener();
   checkTaskEventListener();
   deleteTaskEventListener();
@@ -247,6 +246,59 @@ function checkTaskEventListener() {
   });
 }
 
+// Adding list
+
+function newListEventListener() {
+  document
+    .querySelector(".new-list__form")
+    .addEventListener("submit", async () => {
+      event.preventDefault();
+
+      document.querySelector(".new-list").classList.remove("new-list--active");
+      document.querySelector(".new-list").classList.add("new-list");
+
+      const listName = document.querySelector(".new-list-input").value;
+      let listColor;
+
+      const radios = document.getElementsByName("color");
+      for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+          listColor = radios[i].value;
+          break;
+        }
+      }
+      const postListResponse = await postList(listName, listColor);
+
+      if (postListResponse.ok) {
+        document.querySelector(".lists-wrapper").innerHTML = "";
+        await fetchLists();
+      } else {
+        alert("List name empty or it already exists.");
+      }
+    });
+}
+
+// Delete list
+
+function deleteListEventListener() {
+  document.querySelectorAll(".btn--delete-list").forEach(input =>
+    input.addEventListener("click", e => {
+      e.preventDefault();
+      const listId = e.target.parentNode.parentNode.parentNode.getAttribute(
+        "data-listid"
+      );
+      if (confirm("Are you sure you want to delete this list?")) {
+        const index = userLists.findIndex(obj => obj._id === listId);
+        userLists.splice(index, 1);
+        deleteList(listId);
+        document.querySelector(".lists-wrapper").innerHTML = "";
+        displayLists(userLists);
+      }
+    })
+  );
+}
+
+// hide/show login screen
 function hideLogin() {
   document.querySelector(".login-screen").classList.add("login-screen--hidden");
   document
@@ -375,79 +427,6 @@ function deleteTask(taskId) {
   //przykład: const deleteTaskResponse = await deleteTask('5cc5bd3013e35113c455be5e');
 }
 
-function newListEventListener() {
-  document
-    .querySelector(".new-list__form")
-    .addEventListener("submit", async () => {
-      event.preventDefault();
-
-      document.querySelector(".new-list").classList.remove("new-list--active");
-      document.querySelector(".new-list").classList.add("new-list");
-
-      const listName = document.querySelector(".new-list-input").value;
-      let listColor;
-
-      const radios = document.getElementsByName("color");
-      for (var i = 0, length = radios.length; i < length; i++) {
-        if (radios[i].checked) {
-          listColor = radios[i].value;
-          break;
-        }
-      }
-      const postListResponse = await postList(listName, listColor);
-
-      if (postListResponse.ok) {
-        document.querySelector(".lists-wrapper").innerHTML = "";
-        await fetchLists();
-      } else {
-        alert("List name empty or it already exists.");
-      }
-    });
-}
-
-function deleteListEventListener() {
-  document.querySelectorAll(".btn--delete-list").forEach(input =>
-    input.addEventListener("click", e => {
-      e.preventDefault();
-      const listId = e.target.parentNode.parentNode.parentNode.getAttribute(
-        "data-listid"
-      );
-      if (confirm("Are you sure you want to delete this list?")) {
-        const index = userLists.findIndex(obj => obj._id === listId);
-        userLists.splice(index, 1);
-        deleteList(listId);
-        document.querySelector(".lists-wrapper").innerHTML = "";
-        displayLists(userLists);
-      }
-    })
-  );
-}
-//unfinished #Ola
-// function editTaskEventListener() {
-//   document.querySelectorAll(".btn--edit").forEach(input =>
-//     input.addEventListener("click", e => {
-//       e.preventDefault();
-
-//       document
-//         .querySelector(".item__description")
-//         .classList.add("item__description--hidden");
-//       document
-//         .querySelector(".item__edit")
-//         .classList.remove("item__edit--hidden");
-
-//       const taskId = e.target.parentNode.parentNode.getAttribute("data-taskid");
-
-//       if (confirm("Are you sure?")) {
-//         const index = userLists.tasks.findIndex(obj => obj._id === taskId);
-
-//         putTask(taskId);
-//         document.querySelector(".lists-wrapper").innerHTML = "";
-//         displayLists(userLists);
-//       }
-//     })
-//   );
-// }
-
 // logging out
 document.querySelector(".btn--logout").addEventListener("click", () => {
   document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
@@ -455,82 +434,3 @@ document.querySelector(".btn--logout").addEventListener("click", () => {
   userLists.splice(0, userLists.length);
   showLogin();
 });
-
-/*
-Jak sterować wyglądem:
-
-Przełączenie z logowania na ekran główny:
-
-    document.querySelector(".login-screen").classList.add("login-screen--hidden");
-    document.querySelector(".main-screen").classList.remove("main-screen--hidden");
-
-
-Wyświetlenie nowej listy - template html:
-
-        <div class="list">
-          <div class="list__header" style="background-color: ****tutaj kolor**** ">   <----stwierdziłem, że chyba najwygodniej będzie kolor wrzucać jako inline style
-            <h2 class="list__description">  ***nazwa listy***   </h2>
-            <button class="btn btn--delete-list">
-                <i class="zwicon-trash"></i>
-            </button>
-            <button class="btn btn--new-item">
-                <i class="zwicon-plus-circle"></i>
-            </button>
-          </div>
-          <ul class="list__items list__items--hidden">
-            **************tu będą taski*********
-          </ul>
-        </div>
-
-
-Nowy task - template html (wrzucamy między tagi <ul> ) - po kliknięciu w button .btn--new-item pojawia się niewypełniony task - zamiast nazwy ma pusty input:
-
-            <li class="item">
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                class="checkbox checkbox--item"
-              />
-              <p class="item__description item__description--hidden"></p>
-              <input type="text" class="item__edit" placeholder="Task description"/>
-              <button class="btn btn--edit">
-                <i class="zwicon-edit-square"></i>
-              </button>
-              <button class="btn btn--delete">
-                <i class="zwicon-trash"></i>
-              </button>
-            </li>
-
-Zatwierdzenie taska - input znika i w jego miejsce pojawia się tekst:
-
-    document.querySelector(".item__edit").classList.add("item__edit--hidden");
-    document.querySelector(".item__description").classList.remove("item__description--hidden");
-    document.querySelector(".item__description").innerText = " ***Nazwa taska***  ";
-   
-
-Zwijanie/rozwijanie listy (po kliknięciu na div .list__header):
-
-    document.querySelector(".list__items").classList.toggle("list__items--hidden");
-
-
-Task zrobiony (po ustawieniu "checked" na checkboxie):
-
-    document.querySelector(".item__description").classList.add("item__description--checked");
-
-
-Edycja taska (nazwa taska znika i w jej miejscu pojawia się input z wypełnioną obecną nazwą taska):
-
-    document.querySelector(".item__description").classList.add("item__description--hidden");
-    document.querySelector(".item__edit").classList.remove("item__edit--hidden");
-    document.querySelector(".item__edit").value = "  ****Obecna nazwa taska****   ";
-
-
-Włączenie ekranu nowej listy:
-
-    document.querySelector(".new-list").classList.add(".new-list--active");
-
-    (analogicznie po zatwierdzeniu usuwamy tą klasę i czyścimy inputy)
-    (mam jeszcze problem ze stylowaniem tych radio input z kolorami - jak ogarnę to tu dopiszę)
-
-*/
