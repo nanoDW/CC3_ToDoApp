@@ -33,7 +33,8 @@ function validateTask(task) {
     const schema = {
         name: Joi.string().min(1).max(250).required(),
         list: Joi.string().min(1).max(100).required(),
-        deadline: Joi.date().min('now')
+        deadline: Joi.date().min('now'),
+        done: Joi.boolean()
     };
 
     return Joi.validate(task, schema);
