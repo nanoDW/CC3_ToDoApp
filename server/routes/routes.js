@@ -129,7 +129,6 @@ module.exports = function (app) {
             $set: {
                 name: req.body.name,
                 list: req.body.list,
-                deadline: req.body.deadline,
                 done: req.body.done
             }
         }, { new: true });
