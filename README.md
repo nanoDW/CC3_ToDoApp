@@ -48,12 +48,18 @@ The project requires Node.js installed.
 
 ```bash
 npm install
-npm run build
+cd server; node server.js
 ```
 To run with Webpack Dev Server:
 ```bash
 npm run start:dev
 ```
+
+## Live version
+
+Live version is hosted on Heroku
+
+https://radiant-ocean-56346.herokuapp.com/
 
 ## Features
 * Authentication
