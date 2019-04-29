@@ -3,11 +3,14 @@ const db = require('./db')();
 const app = express();
 const routes = require('./routes/routes')(app);
 const cors = require('cors');
-// ponisze będzie do usunięcia
+require('../prod.js')(app);
+const config = require('config');
+const path = require('path');
+/*
 const {User} = require('./models/user.js');
 const bcrypt = require('bcrypt');
-const config = require('config');
 const Joi = require('joi');
+*/
 
 
 //server PORT
@@ -32,6 +35,9 @@ app.use(express.urlencoded({
 }));
 
 
+app.use(express.static(path.join(__dirname, '../dist')));
+
+
 //ERROR
 app.get("*", function (req, res) {
     res.status(404).send("Error 404. Page not found");
@@ -43,7 +49,8 @@ if (!config.get('jwtPrivateKey')) {
     process.exit(1); 
 }
 
-// creating user - REMOVE LATER
+/*
+// creating user 
 async function createUser() {
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash('345cthh2', salt);
@@ -55,3 +62,4 @@ async function createUser() {
     let result = await user.save();
     console.log(result);
 }
+*/

@@ -25,7 +25,7 @@ document.querySelector(".btn--new-list").addEventListener("click", () => {
 });
 
 async function login(email, password) {
-  const loginResponse = await postLogin(`http://localhost:3000/login`, {
+  const loginResponse = await postLogin(`/login`, {
     email: email,
     password: password
   });
@@ -328,7 +328,7 @@ function postLogin(url, data) {
 }
 
 function getLists() {
-  return fetch("http://localhost:3000/user/lists", {
+  return fetch("/user/lists", {
     method: "GET",
     mode: "cors",
     credentials: "include",
@@ -339,7 +339,7 @@ function getLists() {
 }
 
 function postList(name, color) {
-  return fetch(`http://localhost:3000/user/lists`, {
+  return fetch(`/user/lists`, {
     method: "POST",
     mode: "cors",
     credentials: "include",
@@ -355,7 +355,7 @@ function postList(name, color) {
 }
 
 function putList(listId, name, color) {
-  return fetch(`http://localhost:3000/user/lists/${listId}`, {
+  return fetch(`/user/lists/${listId}`, {
     method: "PUT",
     mode: "cors",
     credentials: "include",
@@ -371,7 +371,7 @@ function putList(listId, name, color) {
 }
 
 function deleteList(listId) {
-  return fetch(`http://localhost:3000/user/lists/${listId}`, {
+  return fetch(`/user/lists/${listId}`, {
     method: "DELETE",
     mode: "cors",
     credentials: "include",
@@ -383,7 +383,7 @@ function deleteList(listId) {
 }
 
 function postTask(name, list) {
-  return fetch(`http://localhost:3000/user/tasks`, {
+  return fetch(`/user/tasks`, {
     method: "POST",
     mode: "cors",
     credentials: "include",
@@ -399,7 +399,7 @@ function postTask(name, list) {
 }
 
 function putTask(taskId, name, list, done) {
-  return fetch(`http://localhost:3000/user/tasks/${taskId}`, {
+  return fetch(`/user/tasks/${taskId}`, {
     method: "PUT",
     mode: "cors",
     credentials: "include",
@@ -416,7 +416,7 @@ function putTask(taskId, name, list, done) {
 }
 
 function deleteTask(taskId) {
-  return fetch(`http://localhost:3000/user/tasks/${taskId}`, {
+  return fetch(`/user/tasks/${taskId}`, {
     method: "DELETE",
     mode: "cors",
     credentials: "include",

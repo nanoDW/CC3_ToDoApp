@@ -15,7 +15,7 @@ module.exports = function (app) {
 
     app.use(cors({
         credentials: true,
-        origin: ["http://127.0.0.1:5500", "http://localhost:8080"]
+        origin: ["http://127.0.0.1:5500", "http://localhost:8080", "https://radiant-ocean-56346.herokuapp.com/"]
     }));
 
     app.use(express.json());
