@@ -16,11 +16,11 @@ Simple webapp made for managing tasks. App was made during CodersCamp 2019 cours
 
 ## General info
 
-Frontend:
+**Frontend:**
 The App is created with HTML, CSS and Vanilla JS. Webpack was used to bundle the files and Babel for allowing use of the App in older browsers.
 App consist of login screen and main screen that shows lists of tasks. The user can create multiple lists, each of them can be customized with different color and name. Then, tasks can be added, deleted and marked as done or undone. User can also delete the whole list.
 
-Backend: 
+**Backend:**
 The database is hosted in a cloud - MongoDB Atlas. It stores task lists, tasks and users of our app.
 We used Express.js to create a sever and manage GET, POST, PUT, DELETE HTTP requests on tasks and task lists. 
 User authentication is handled with bcrypt and jsonwebtoken libraries. In this demo version there is only one user in the database and there is no possibility to register a new one. User gets a cookie storing their JSON web token while they log in. The cookie is removed from the browser when user logs out. Each route, apart from /login, is protected with user authentication.
@@ -54,12 +54,6 @@ To run with Webpack Dev Server:
 ```bash
 npm run start:dev
 ```
-
-## Live version
-
-Live version is hosted on Heroku
-
-https://radiant-ocean-56346.herokuapp.com/
 
 ## Features
 * Authentication
