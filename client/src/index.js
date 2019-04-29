@@ -191,21 +191,37 @@ function checkTaskEventListener() {
   checkboxes.forEach(checkbox => {
     const currentTask = checkbox.parentNode;
     const currentTaskId = currentTask.dataset.taskid;
+    const currentTaskDesc = currentTask.querySelector(".item__description")
+      .innerText;
+    const currentList = currentTask.parentNode.parentNode.dataset.listname;
     checkbox.addEventListener("change", async () => {
       if (checkbox.checked) {
         currentTask
           .querySelector(".item__description")
           .classList.add("item__description--checked");
         checkbox.setAttribute("checked", "true");
-        console.log(currentTaskId);
-        // Tu musi wejść funkcja putTask wysyłająca done: true dla danego taska (currentTaskId)
+        console.log(currentTaskId, currentTaskDesc, currentList);
+
+        const checkTaskResponse = await putTask(
+          currentTaskId,
+          currentTaskDesc,
+          currentList,
+          "2021-05-06",
+          true
+        );
       } else {
         currentTask
           .querySelector(".item__description")
           .classList.remove("item__description--checked");
         checkbox.setAttribute("checked", "false");
-        console.log(currentTaskId);
-        // Tu musi wejść funkcja putTask wysyłająca done: false dla danego taska (currentTaskId)
+        console.log(currentTaskId, currentTaskDesc, currentList);
+        const checkTaskResponse = await putTask(
+          currentTaskId,
+          currentTaskDesc,
+          currentList,
+          "2021-05-06",
+          false
+        );
       }
     });
   });
@@ -326,7 +342,7 @@ function putTask(taskId, name, list, deadline, done) {
       done: done
     })
   });
-  //przykład: const putTaskResponse = await putTask('5cc5bd3013e35113c455be5e', 'newer Task 500', 'someList', '2019-05-06');
+  //przykład: const putTaskResponse = await putTask('5cc5bd3013e35113c455be5e', 'newer Task 500', 'someList', '2019-05-06', done);
 }
 
 function deleteTask(taskId) {
