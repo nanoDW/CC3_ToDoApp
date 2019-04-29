@@ -103,7 +103,8 @@ module.exports = function (app) {
             userId: req.user,
             name: req.body.name,
             list: req.body.list,
-            deadline: req.body.deadline
+            deadline: req.body.deadline,
+            done: req.body.done
         });
 
         await task.save();
@@ -130,7 +131,8 @@ module.exports = function (app) {
             $set: {
                 name: req.body.name,
                 list: req.body.list,
-                deadline: req.body.deadline
+                deadline: req.body.deadline,
+                done: req.body.done
             }
         }, { new: true });
 
