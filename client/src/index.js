@@ -52,6 +52,7 @@ async function fetchLists() {
   newTaskEventListener();
 }
 
+
 // Display lists
 
 function displayLists(userLists) {
@@ -169,11 +170,17 @@ async function addTask(targetList) {
         taskInputValue,
         targetList.dataset.listname,
         "2019-05-30"
-      );
-      console.log(postTaskResponse);
+      )
+      postTaskResponse.json().then(body => dummyFunction(body._id));
+      
     }
   });
 }
+
+function dummyFunction(x) {
+  console.log(x)
+}
+
 
 function hideLogin() {
   document.querySelector(".login-screen").classList.add("login-screen--hidden");
