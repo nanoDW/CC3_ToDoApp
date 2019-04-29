@@ -68,7 +68,7 @@ function displayLists(userLists) {
       }
       tasksHTML += `
         <li class="item" data-taskid="${task._id}">
-          <input type="checkbox" name="" class="checkbox checkbox--item"${checked}/>
+          <input type="checkbox" name="" class="checkbox checkbox--item" ${checked}/>
           <p class="item__description ${checkedClass}">${task.name}</p>
           <button class="btn btn--edit">
             <i class="zwicon-edit-square"></i>
@@ -101,6 +101,7 @@ function displayLists(userLists) {
   deleteListEventListener();
   editTaskEventListener();
   toggleListEventListener();
+  checkTaskEventListener();
 }
 
 // Toggle list on mobile devices
@@ -137,6 +138,7 @@ function addTask(targetList) {
                 name=""
                 id=""
                 class="checkbox checkbox--item"
+                checked=""
               />
               <p class="item__description item__description--hidden"></p>
               <input type="text" class="item__edit" placeholder="Task description" autofocus/>
@@ -162,11 +164,11 @@ function addTask(targetList) {
   });
 
   editButton.addEventListener("click", async () => {
-    taskInput.classList.add("item__edit--hidden");
-    itemDescription.classList.remove("item__description--hidden");
     if (taskInputValue == "") {
       alert("Task name is empty");
     } else {
+      taskInput.classList.add("item__edit--hidden");
+      itemDescription.classList.remove("item__description--hidden");
       itemDescription.innerText = taskInputValue;
       editButton.children[0].className = "zwicon-edit-square";
       deleteButton.children[0].className = "zwicon-trash";
@@ -175,10 +177,37 @@ function addTask(targetList) {
         targetList.dataset.listname,
         "2020-05-30"
       );
-      postTaskResponse.json().then(body => {
+      await postTaskResponse.json().then(body => {
         currentItem.dataset.taskid = body._id;
       });
+      checkTaskEventListener();
     }
+  });
+}
+
+// check task
+function checkTaskEventListener() {
+  const checkboxes = document.querySelectorAll(".checkbox--item");
+  checkboxes.forEach(checkbox => {
+    const currentTask = checkbox.parentNode;
+    const currentTaskId = currentTask.dataset.taskid;
+    checkbox.addEventListener("change", async () => {
+      if (checkbox.checked) {
+        currentTask
+          .querySelector(".item__description")
+          .classList.add("item__description--checked");
+        checkbox.setAttribute("checked", "true");
+        console.log(currentTaskId);
+        // Tu musi wejść funkcja putTask wysyłająca done: true dla danego taska (currentTaskId)
+      } else {
+        currentTask
+          .querySelector(".item__description")
+          .classList.remove("item__description--checked");
+        checkbox.setAttribute("checked", "false");
+        console.log(currentTaskId);
+        // Tu musi wejść funkcja putTask wysyłająca done: false dla danego taska (currentTaskId)
+      }
+    });
   });
 }
 
