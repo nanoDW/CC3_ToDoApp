@@ -10,16 +10,12 @@ const config = require('config');
 
 router.use(cors({
     credentials: true,
-    origin: ["http://localhost:8080", "http://127.0.0.1:5500"]
+    origin: ["http://localhost:8080", "http://127.0.0.1:5500", "https://radiant-ocean-56346.herokuapp.com/"]
 }));
 
-//http://127.0.0.1:5500
 
 router.use(cookieParser());
 
-// Będziemy korzystać z tego usera:
-// email: testuser@gmail.com
-// password: 345cthh2
 router.post("/", async (req, res) => {
     const {
         error

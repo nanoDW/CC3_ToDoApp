@@ -3,11 +3,13 @@ const db = require('./db')();
 const app = express();
 const routes = require('./routes/routes')(app);
 const cors = require('cors');
-// ponisze będzie do usunięcia
+require('../prod.js')(app);
+const config = require('config');
+/*
 const {User} = require('./models/user.js');
 const bcrypt = require('bcrypt');
-const config = require('config');
 const Joi = require('joi');
+*/
 
 
 //server PORT
@@ -43,7 +45,8 @@ if (!config.get('jwtPrivateKey')) {
     process.exit(1); 
 }
 
-// creating user - REMOVE LATER
+/*
+// creating user 
 async function createUser() {
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash('345cthh2', salt);
@@ -55,3 +58,4 @@ async function createUser() {
     let result = await user.save();
     console.log(result);
 }
+*/
