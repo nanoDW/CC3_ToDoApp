@@ -51,6 +51,12 @@ To run with Webpack Dev Server:
 npm run start:dev
 ```
 
+## Live version
+
+Live version is hosted on Heroku
+
+https://radiant-ocean-56346.herokuapp.com/
+
 ## Features
 
 
