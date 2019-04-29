@@ -111,20 +111,19 @@ function toggleListEventListener() {
   });
 }
 
-// Task edit
+// Task create
 
 function newTaskEventListener() {
   const newItemButtons = document.querySelectorAll(".btn--new-item");
   newItemButtons.forEach(button => {
     button.addEventListener("click", event => {
       const targetList = event.currentTarget.parentNode.parentNode;
-      console.log(targetList);
       addTask(targetList);
     });
   });
 }
 
-async function addTask(targetList) {
+function addTask(targetList) {
   const initialHtml = `
           <li class="item" data-taskid="new-item">
               <input
