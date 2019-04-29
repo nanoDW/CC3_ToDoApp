@@ -44,7 +44,7 @@ The project requires Node.js installed.
 
 ```bash
 npm install
-npm run build
+cd server; node server.js
 ```
 To run with Webpack Dev Server:
 ```bash
