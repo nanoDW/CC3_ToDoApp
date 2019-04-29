@@ -174,8 +174,7 @@ function addTask(targetList) {
       deleteButton.children[0].className = "zwicon-trash";
       const postTaskResponse = await postTask(
         taskInputValue,
-        targetList.dataset.listname,
-        "2020-05-30"
+        targetList.dataset.listname
       );
       await postTaskResponse.json().then(body => {
         currentItem.dataset.taskid = body._id;
@@ -206,7 +205,6 @@ function checkTaskEventListener() {
           currentTaskId,
           currentTaskDesc,
           currentList,
-          "2021-05-06",
           true
         );
       } else {
@@ -219,7 +217,6 @@ function checkTaskEventListener() {
           currentTaskId,
           currentTaskDesc,
           currentList,
-          "2021-05-06",
           false
         );
       }
