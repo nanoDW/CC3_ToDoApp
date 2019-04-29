@@ -82,6 +82,7 @@ function displayLists(userLists) {
     const displayedList = `
     <div class="list" data-listid="${list._id}" data-listname="${list.name}">
       <div class="list__header" style="background-color:${list.color}">
+        <button class="btn btn--toggle-list"><i class="zwicon-arrow-circle-down"></i></button>
         <h2 class="list__description">${list.name}</h2>
 
         <button class="btn btn--delete-list">
@@ -102,18 +103,20 @@ function displayLists(userLists) {
   editTaskEventListener();
   toggleListEventListener();
   checkTaskEventListener();
+  deleteTaskEventListener();
 }
 
 // Toggle list on mobile devices
 
 function toggleListEventListener() {
-  const listHeaders = document.querySelectorAll(".list__header");
-  listHeaders.forEach(header => {
-    header.addEventListener("click", () => {
-      const currentList = header.parentNode;
+  const listHeaderButtons = document.querySelectorAll(".btn--toggle-list");
+  listHeaderButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const currentList = button.parentNode.parentNode;
       currentList
         .querySelector(".list__items")
         .classList.toggle("list__items--hidden");
+      button.classList.toggle("btn--rotated");
     });
   });
 }
@@ -180,7 +183,23 @@ function addTask(targetList) {
         currentItem.dataset.taskid = body._id;
       });
       checkTaskEventListener();
+      deleteTaskEventListener();
     }
+  });
+}
+// Delete task
+
+function deleteTaskEventListener() {
+  const deleteTaskButtons = document.querySelectorAll(".btn--delete");
+  deleteTaskButtons.forEach(button => {
+    const currentTask = button.parentNode;
+    const currentTaskId = button.parentNode.dataset.taskid;
+
+    button.addEventListener("click", async () => {
+      console.log(currentTask);
+      currentTask.parentNode.removeChild(currentTask);
+      const deleteTaskResponse = await deleteTask(currentTaskId);
+    });
   });
 }
 

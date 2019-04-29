@@ -130,7 +130,7 @@ input {
 .btn--new-list {
   width: 100%;
   max-width: 250px;
-  margin-bottom: 15px;
+  margin-bottom: 35px;
   padding: 10px;
   font-size: 20px;
   background-color: #c1666b;
@@ -170,6 +170,17 @@ input {
   padding: 0 0 0 15px;
   background: none;
   font-size: 20px;
+}
+.btn--toggle-list {
+  padding: none;
+  margin: 0 10px 0 0;
+  background: none;
+  font-size: 25px;
+  transform-origin: center;
+  transition: transform 0.5s ease;
+}
+.btn--rotated {
+  transform: rotate(180deg);
 }
 .list__items {
   padding: 10px;
@@ -318,5 +329,8 @@ input {
   }
   .list__items--hidden {
     display: block;
+  }
+  .btn--toggle-list {
+    display: none;
   }
 }
