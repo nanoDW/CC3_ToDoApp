@@ -5,6 +5,7 @@ const routes = require('./routes/routes')(app);
 const cors = require('cors');
 require('../prod.js')(app);
 const config = require('config');
+const path = require('path');
 /*
 const {User} = require('./models/user.js');
 const bcrypt = require('bcrypt');
@@ -32,6 +33,9 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+
+
+app.use(express.static(path.join(__dirname, '../dist')));
 
 
 //ERROR
