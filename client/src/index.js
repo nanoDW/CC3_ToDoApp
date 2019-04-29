@@ -167,9 +167,11 @@ function addTask(targetList) {
       const postTaskResponse = await postTask(
         taskInputValue,
         targetList.dataset.listname,
-        "2019-05-30"
+        "2020-05-30"
       );
-      console.log(postTaskResponse);
+      postTaskResponse.json().then(body => {
+        currentItem.dataset.taskid = body._id;
+      });
     }
   });
 }
