@@ -141,7 +141,6 @@ function addTask(targetList) {
                 name=""
                 id=""
                 class="checkbox checkbox--item"
-                checked=""
               />
               <p class="item__description item__description--hidden"></p>
               <input type="text" class="item__edit" placeholder="Task description" autofocus/>
@@ -170,19 +169,23 @@ function addTask(targetList) {
     if (taskInputValue == "") {
       alert("Task name is empty");
     } else {
-      taskInput.classList.add("item__edit--hidden");
-      itemDescription.classList.remove("item__description--hidden");
-      itemDescription.innerText = taskInputValue;
-      editButton.children[0].className = "zwicon-edit-square";
-      deleteButton.children[0].className = "zwicon-trash";
       const postTaskResponse = await postTask(
         taskInputValue,
-        targetList.dataset.listname,
-        "2020-05-30"
+        targetList.dataset.listname
       );
-      await postTaskResponse.json().then(body => {
-        currentItem.dataset.taskid = body._id;
-      });
+      if (postTaskResponse.ok) {
+        taskInput.classList.add("item__edit--hidden");
+        itemDescription.classList.remove("item__description--hidden");
+        itemDescription.innerText = taskInputValue;
+        editButton.children[0].className = "zwicon-edit-square";
+        deleteButton.children[0].className = "zwicon-trash";
+        await postTaskResponse.json().then(body => {
+          currentItem.dataset.taskid = body._id;
+        });
+      } else {
+        alert("Error: probably task with this name already exists...");
+      }
+
       checkTaskEventListener();
       deleteTaskEventListener();
     }
@@ -225,7 +228,6 @@ function checkTaskEventListener() {
           currentTaskId,
           currentTaskDesc,
           currentList,
-          "2021-05-06",
           true
         );
       } else {
@@ -238,7 +240,6 @@ function checkTaskEventListener() {
           currentTaskId,
           currentTaskDesc,
           currentList,
-          "2021-05-06",
           false
         );
       }
@@ -339,7 +340,7 @@ function postTask(name, list) {
     },
     body: JSON.stringify({
       name: name,
-      list: list,
+      list: list
     })
   });
   //przykład: const postTaskResponse = await postTask('newTask', 'someList', '2019-04-30');
