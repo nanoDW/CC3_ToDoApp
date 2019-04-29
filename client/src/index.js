@@ -60,10 +60,16 @@ function displayLists(userLists) {
     const tasks = [...list.tasks];
     let tasksHTML = "";
     tasks.forEach(task => {
+      let checked = "";
+      let checkedClass = "";
+      if (task.done) {
+        checked = "checked";
+        checkedClass = "item__description--checked";
+      }
       tasksHTML += `
         <li class="item" data-taskid="${task._id}">
-          <input type="checkbox" name="" class="checkbox checkbox--item" />
-          <p class="item__description">${task.name}</p>
+          <input type="checkbox" name="" class="checkbox checkbox--item"${checked}/>
+          <p class="item__description ${checkedClass}">${task.name}</p>
           <button class="btn btn--edit">
             <i class="zwicon-edit-square"></i>
           </button>
@@ -259,7 +265,7 @@ function deleteList(listId) {
   //przykład: const deleteListResponse = await deleteList('5cc575a8d39f43b7d1ec3091');
 }
 
-function postTask(name, list, deadline, done) {
+function postTask(name, list, deadline) {
   return fetch(`http://localhost:3000/user/tasks`, {
     method: "POST",
     mode: "cors",
@@ -270,8 +276,7 @@ function postTask(name, list, deadline, done) {
     body: JSON.stringify({
       name: name,
       list: list,
-      deadline: deadline,
-      done: done
+      deadline: deadline
     })
   });
   //przykład: const postTaskResponse = await postTask('newTask', 'someList', '2019-04-30');
