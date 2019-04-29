@@ -71,7 +71,7 @@ function displayLists(userLists) {
           <input type="checkbox" name="" class="checkbox checkbox--item" ${checked}/>
           <p class="item__description ${checkedClass}">${task.name}</p>
           <button class="btn btn--edit">
-            <i class="zwicon-edit-square"></i>
+            <i class=""></i>
           </button>
           <button class="btn btn--delete">
             <i class="zwicon-trash"></i>
@@ -100,7 +100,7 @@ function displayLists(userLists) {
     listsWrapper.innerHTML += displayedList;
   });
   deleteListEventListener();
-  editTaskEventListener();
+  // editTaskEventListener();
   toggleListEventListener();
   checkTaskEventListener();
   deleteTaskEventListener();
@@ -177,7 +177,7 @@ function addTask(targetList) {
         taskInput.classList.add("item__edit--hidden");
         itemDescription.classList.remove("item__description--hidden");
         itemDescription.innerText = taskInputValue;
-        editButton.children[0].className = "zwicon-edit-square";
+        editButton.children[0].className = "";
         deleteButton.children[0].className = "zwicon-trash";
         await postTaskResponse.json().then(body => {
           currentItem.dataset.taskid = body._id;
@@ -423,30 +423,30 @@ function deleteListEventListener() {
   );
 }
 //unfinished #Ola
-function editTaskEventListener() {
-  document.querySelectorAll(".btn--edit").forEach(input =>
-    input.addEventListener("click", e => {
-      e.preventDefault();
+// function editTaskEventListener() {
+//   document.querySelectorAll(".btn--edit").forEach(input =>
+//     input.addEventListener("click", e => {
+//       e.preventDefault();
 
-      document
-        .querySelector(".item__description")
-        .classList.add("item__description--hidden");
-      document
-        .querySelector(".item__edit")
-        .classList.remove("item__edit--hidden");
+//       document
+//         .querySelector(".item__description")
+//         .classList.add("item__description--hidden");
+//       document
+//         .querySelector(".item__edit")
+//         .classList.remove("item__edit--hidden");
 
-      const taskId = e.target.parentNode.parentNode.getAttribute("data-taskid");
+//       const taskId = e.target.parentNode.parentNode.getAttribute("data-taskid");
 
-      if (confirm("Are you sure?")) {
-        const index = userLists.tasks.findIndex(obj => obj._id === taskId);
+//       if (confirm("Are you sure?")) {
+//         const index = userLists.tasks.findIndex(obj => obj._id === taskId);
 
-        putTask(taskId);
-        document.querySelector(".lists-wrapper").innerHTML = "";
-        displayLists(userLists);
-      }
-    })
-  );
-}
+//         putTask(taskId);
+//         document.querySelector(".lists-wrapper").innerHTML = "";
+//         displayLists(userLists);
+//       }
+//     })
+//   );
+// }
 
 // logging out
 document.querySelector(".btn--logout").addEventListener("click", () => {
