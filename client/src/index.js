@@ -21,7 +21,7 @@ document.querySelector(".btn--new-list").addEventListener("click", () => {
   event.preventDefault();
   document.querySelector(".new-list").classList.add("new-list--active");
 
-  newListEventListener()
+  newListEventListener();
 });
 
 async function login(email, password) {
@@ -43,15 +43,16 @@ async function fetchLists() {
       return res.json();
     })
     .then(lists => {
-      userLists.length = 0
-      userLists.push(...lists)
+      userLists.length = 0;
+      userLists.push(...lists);
     });
 
   console.log("Lists of current user: ", userLists);
   displayLists(userLists);
-  allowTaskAdding();
+  newTaskEventListener();
 }
-// Wyświetlanie list z taskami
+
+// Display lists
 
 function displayLists(userLists) {
   const listsWrapper = document.querySelector(".lists-wrapper");
@@ -93,13 +94,27 @@ function displayLists(userLists) {
   });
   deleteListEventListener();
   editTaskEventListener();
+  toggleListEventListener();
 }
 
-// Wstępny zarys dodawania taska
+// Toggle list on mobile devices
 
-function allowTaskAdding() {
+function toggleListEventListener() {
+  const listHeaders = document.querySelectorAll(".list__header");
+  listHeaders.forEach(header => {
+    header.addEventListener("click", () => {
+      const currentList = header.parentNode;
+      currentList
+        .querySelector(".list__items")
+        .classList.toggle("list__items--hidden");
+    });
+  });
+}
+
+// Task edit
+
+function newTaskEventListener() {
   const newItemButtons = document.querySelectorAll(".btn--new-item");
-  console.log(newItemButtons);
   newItemButtons.forEach(button => {
     button.addEventListener("click", event => {
       const targetList = event.currentTarget.parentNode.parentNode;
@@ -119,7 +134,7 @@ async function addTask(targetList) {
                 class="checkbox checkbox--item"
               />
               <p class="item__description item__description--hidden"></p>
-              <input type="text" class="item__edit" placeholder="Task description"/>
+              <input type="text" class="item__edit" placeholder="Task description" autofocus/>
               <button class="btn btn--edit">
                 <i class="zwicon-checkmark-circle"></i>
               </button>
@@ -144,15 +159,19 @@ async function addTask(targetList) {
   editButton.addEventListener("click", async () => {
     taskInput.classList.add("item__edit--hidden");
     itemDescription.classList.remove("item__description--hidden");
-    itemDescription.innerText = taskInputValue;
-    editButton.children[0].className = "zwicon-edit-square";
-    deleteButton.children[0].className = "zwicon-trash";
-    const postTaskResponse = await postTask(
-      taskInputValue,
-      targetList.dataset.listname,
-      "2019-05-30"
-    );
-    console.log(postTaskResponse);
+    if (taskInputValue == "") {
+      alert("Task name is empty");
+    } else {
+      itemDescription.innerText = taskInputValue;
+      editButton.children[0].className = "zwicon-edit-square";
+      deleteButton.children[0].className = "zwicon-trash";
+      const postTaskResponse = await postTask(
+        taskInputValue,
+        targetList.dataset.listname,
+        "2019-05-30"
+      );
+      console.log(postTaskResponse);
+    }
   });
 }
 
@@ -286,36 +305,38 @@ function deleteTask(taskId) {
 }
 
 function newListEventListener() {
-  document.querySelector('.new-list__form').addEventListener("submit", async () => {
-    event.preventDefault();
+  document
+    .querySelector(".new-list__form")
+    .addEventListener("submit", async () => {
+      event.preventDefault();
 
-    document.querySelector(".new-list").classList.remove("new-list--active");
-    document.querySelector(".new-list").classList.add("new-list");
+      document.querySelector(".new-list").classList.remove("new-list--active");
+      document.querySelector(".new-list").classList.add("new-list");
 
-    const listName = document.querySelector(".new-list-input").value
-    let listColor;
+      const listName = document.querySelector(".new-list-input").value;
+      let listColor;
 
-    const radios = document.getElementsByName('color');
-    for (var i = 0, length = radios.length; i < length; i++) {
-      if (radios[i].checked) {
-        listColor = radios[i].value;
-        break;
+      const radios = document.getElementsByName("color");
+      for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+          listColor = radios[i].value;
+          break;
+        }
       }
-    }
-    const postListResponse = await postList(listName, listColor);
+      const postListResponse = await postList(listName, listColor);
 
-    if (postListResponse.ok){
-      document.querySelector(".lists-wrapper").innerHTML = '';
-      await fetchLists();
-    }else {
-      alert('List name empty or it already exists.')
-    }
-  });
+      if (postListResponse.ok) {
+        document.querySelector(".lists-wrapper").innerHTML = "";
+        await fetchLists();
+      } else {
+        alert("List name empty or it already exists.");
+      }
+    });
 }
 
-function deleteListEventListener(){
-  document.querySelectorAll('.btn--delete-list')
-    .forEach(input => input.addEventListener('click', e => {
+function deleteListEventListener() {
+  document.querySelectorAll(".btn--delete-list").forEach(input =>
+    input.addEventListener("click", e => {
       e.preventDefault();
       const listId = e.target.parentNode.parentNode.parentNode.getAttribute(
         "data-listid"

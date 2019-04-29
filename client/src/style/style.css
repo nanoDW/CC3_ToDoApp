@@ -12,6 +12,9 @@ font-family: 'Roboto', sans-serif; */
   border-radius: 10px;
   cursor: pointer;
 }
+button:focus {
+  outline: none;
+}
 .app {
   width: 100%;
   height: 100%;
@@ -250,6 +253,7 @@ input {
 .color-option {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .color-display {
   height: 50px;
