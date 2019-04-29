@@ -1,6 +1,8 @@
 # CC3_ToDoApp
 Simple webapp made for managing tasks. App was made during CodersCamp 2019 course.
 
+**[Check out live demo here!](https://radiant-ocean-56346.herokuapp.com/)**
+
 ## Table of contents
 - [CC3_ToDoApp](#cc3todoapp)
   - [Table of contents](#table-of-contents)
@@ -15,6 +17,8 @@ Simple webapp made for managing tasks. App was made during CodersCamp 2019 cours
 ## General info
 
 Frontend:
+The App is created with HTML, CSS and Vanilla JS. Webpack was used to bundle the files and Babel for allowing use of the App in older browsers.
+App consist of login screen and main screen that shows lists of tasks. The user can create multiple lists, each of them can be customized with different color and name. Then, tasks can be added, deleted and marked as done or undone. User can also delete the whole list.
 
 Backend: 
 The database is hosted in a cloud - MongoDB Atlas. It stores task lists, tasks and users of our app.
@@ -52,7 +56,12 @@ npm run start:dev
 ```
 
 ## Features
-
+* Authentication
+* Adding multiple lists of tasks
+* Adding tasks to the list
+* Marking task as checked
+* Removing task
+* Removing list
 
 
 ## Screenshots
