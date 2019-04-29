@@ -1,14 +1,16 @@
 # CC3_ToDoApp
-Simple webapp made for manage tasks. App was made during CodersCamp 2019 course.
+Simple webapp made for managing tasks. App was made during CodersCamp 2019 course.
 
 ## Table of contents
-* [General info](#general-info)
-* [Technologies](#technologies)
-* [Setup](#setup)
-* [Features](#features)
-* [Screenshots](#screenshots)
-* [Authors](#authors)
-* [Credits](#credits)
+- [CC3_ToDoApp](#cc3todoapp)
+  - [Table of contents](#table-of-contents)
+  - [General info](#general-info)
+  - [Technologies](#technologies)
+  - [Setup](#setup)
+  - [Features](#features)
+  - [Screenshots](#screenshots)
+  - [Authors](#authors)
+  - [Credits](#credits)
 
 ## General info
 
@@ -44,6 +46,10 @@ The project requires Node.js installed.
 npm install
 npm run build
 ```
+To run with Webpack Dev Server:
+```bash
+npm run start:dev
+```
 
 ## Features
 
@@ -51,6 +57,9 @@ npm run build
 
 ## Screenshots
 
+![Devices screenshot](screenshots/todo-1-small.jpg)
+
+![Mobile screenshot](screenshots/todo-2-small.jpg)
 
 
 ## Authors
@@ -60,4 +69,6 @@ npm run build
 * https://github.com/MarcinCzajka
 
 ## Credits
+
+* Icons by [Zwicon](https://www.zwicon.com/)
 
